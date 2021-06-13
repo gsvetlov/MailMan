@@ -12,13 +12,10 @@ namespace MailMan.Services.MailSenderService.impl
         private static IMailSenderService _instance;
         public static IMailSenderService GetService()
         {
-            if (_instance != null) return _instance;
-            IMailSenderService service;
-            lock (_lock)
-            {
-                service = new SimpleSmtpService();
-            }
-            return service;
+            if (_instance == null)
+                lock (_lock)
+                    _instance = new SimpleSmtpService();
+            return _instance;
         }
         #endregion
 
