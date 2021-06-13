@@ -5,8 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailMan.TestWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="450" Width="800" Name="wMainWindow"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <DockPanel>
+        <Button Content="Отправить" Click="SendButton_OnClick" DockPanel.Dock="Bottom" Width="150" Margin="20"/>
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <materialDesign:Card Padding="10" Width="{Binding ElementName=wMainWindow, Path=ActualWidth}">
+                    <UniformGrid Rows="1" Columns="4">
+                        <materialDesign:Card Padding="10" Margin="10">
+                            <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Text="Логин" VerticalAlignment="Center" />
+                        </materialDesign:Card>
+                        <materialDesign:Card Padding="10" Margin="10">
+                            <TextBox x:Name="LoginEdit" Style="{DynamicResource MaterialDesignTextBox}"/>
+                        </materialDesign:Card>
+                        <materialDesign:Card Padding="10" Margin="10">
+                            <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}" VerticalAlignment="Center" Text="Пароль"/>
+                        </materialDesign:Card>
+                        <materialDesign:Card Padding="10" Margin="10">
+                            <PasswordBox x:Name="PasswordEdit" Style="{DynamicResource MaterialDesignPasswordBox}"/>
+                        </materialDesign:Card>
+                    </UniformGrid>
+                </materialDesign:Card>
+            </StackPanel>
+            <materialDesign:Card Padding="10" Margin="10">
+                <DockPanel>
+                    <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Text="Тема" HorizontalAlignment="Left" VerticalAlignment="Center" Width="140" DockPanel.Dock="Left"/>
+                    <TextBox x:Name="SubjectEdit" Style="{DynamicResource MaterialDesignTextBox}"/>
+                </DockPanel>
+            </materialDesign:Card>                        
+        </StackPanel>
+        <materialDesign:Card Padding="10" Margin="10">            
+            <TextBox x:Name="BodyEdit" HorizontalAlignment="Left" TextWrapping="Wrap" Style="{DynamicResource MaterialDesignOutlinedTextBox}" BorderBrush="LightGray"/>
+        </materialDesign:Card>
+    </DockPanel>
 </Window>
