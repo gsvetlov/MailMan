@@ -7,8 +7,4 @@
     <AssemblyOriginatorKeyFile>mailman_lib.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>
