@@ -142,7 +142,7 @@
                         </ToolBar>
                         
                         <ToolBar ToolTip="Адресаты" MinWidth="210">
-                            <fa:ImageAwesome Icon="Solid_AddressCard" ToolTip="Письма" Style="{StaticResource ToolbarImage}"/>
+                            <fa:ImageAwesome Icon="Solid_AddressCard" ToolTip="Адресаты" Style="{StaticResource ToolbarImage}"/>
                             <ComboBox Width="150" ToolTip="Адресаты" SelectedIndex="0"/>
                             <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
@@ -230,15 +230,6 @@
                 </DockPanel>
             </TabItem>
 
-            <TabItem x:Name="tabRecipients">
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <fa:ImageAwesome ToolTip="Адресаты" Icon="Solid_AddressBook" Height="10"/>
-                        <TextBlock Text="Адресаты" VerticalAlignment="Center" Margin="3,0,0,0"/>
-                    </StackPanel>
-                </TabItem.Header>
-            </TabItem>
-           
             <TabItem x:Name="tabTemplates">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -267,8 +258,29 @@
                     </GroupBox>
                 </DockPanel>
             </TabItem>
+           
+            <TabItem x:Name="tabRecipients">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome ToolTip="Адресаты" Icon="Solid_AddressBook" Height="10"/>
+                        <TextBlock Text="Адресаты" VerticalAlignment="Center" Margin="3,0,0,0"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <DockPanel>
+                    <GroupBox Header="Получатели" MinWidth="200" DockPanel.Dock="Left">
+                        
+                    </GroupBox>                    
+                    <GroupBox Header="Рассылки" MinWidth="200" DockPanel.Dock="Right">
+                        
+                    </GroupBox>
+                    <GroupBox Header="О получателе">
+                        
+                    </GroupBox>
+                    
+                </DockPanel>
+            </TabItem>
 
-            <TabItem x:Name="tabServers">
+            <TabItem x:Name="tabServers" IsEnabled="False">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome ToolTip="Серверы" Icon="Solid_Server" Height="10"/>
@@ -279,9 +291,7 @@
                     <StackPanel Orientation="Vertical" Width="200">
                         <TextBlock Text="Серверы" Margin="2,2,2,5"/>
                         <ToolBarPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button Content="+" Margin="5,2" Width="20" Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                            <Button Content="-" Margin="5,2" Width="20" Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                            <Button Content="CC" Margin="5,2" Width="20" Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                            
                         </ToolBarPanel>
                     </StackPanel>
                 </StackPanel>
