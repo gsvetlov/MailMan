@@ -1,81 +1,242 @@
 ﻿<Window x:Class="MailMan.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"  
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:MailMan.ViewModels"
         xmlns:local="clr-namespace:MailMan"
-        mc:Ignorable="d"
-        Title="{Binding Title}" Height="450" Width="800">
+              
+        xmlns:vm="clr-namespace:MailMan.ViewModels"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        
+        Title="{Binding Title}" Height="600" Width="800">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="{x:Type Menu}">
+            <Setter Property="DockPanel.Dock" Value="Top"/>
+        </Style>
+        <Style TargetType="{x:Type StatusBar}">
+            <Setter Property="DockPanel.Dock" Value="Bottom"/>
+        </Style>
+        <Style TargetType="{x:Type StatusBarItem}">
+            <Setter Property="Margin" Value="5,2"/>
+        </Style>
+        <Style x:Key="ToolbarButton"  TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Margin" Value="5,2"/>
+            <Setter Property="Padding" Value="3"/>
+        </Style>
+        <Style x:Key="ToolbarIconButton"  TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="26"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Margin" Value="5,2"/>
+            <Setter Property="Padding" Value="2"/>
+        </Style>
+        <Style x:Key="ToolbarImage" TargetType="{x:Type fa:ImageAwesome}">
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Foreground" Value="ForestGreen"/>
+        </Style>
+        <Style x:Key="ToolbarIconImage" TargetType="{x:Type fa:ImageAwesome}">
+            <Setter Property="Foreground" Value="DarkCyan"/>
+        </Style>
+    </Window.Resources>
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="File"/>
-            <MenuItem Header="Settings"/>
-            <MenuItem Header="About"/>
+
+        <Menu>
+            <MenuItem>
+                <MenuItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Height="12" Icon="Solid_FolderOpen"/>
+                        <TextBlock Text ="File" Margin="5,0"/>
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem>
+                <MenuItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Height="12" Icon="Solid_Tools"/>
+                        <TextBlock Text ="Settings" Margin="5,0"/>
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem>
+                <MenuItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Height="12" Icon="Solid_QuestionCircle"/>
+                        <TextBlock Text ="About" Margin="5,0"/>
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
         </Menu>
-        <StatusBar DockPanel.Dock="Bottom">            
-            <StatusBarItem Margin="5,2">
+
+        <StatusBar>
+            <StatusBarItem>
                 <TextBlock Text="Дата/время"/>
             </StatusBarItem>
             <Separator/>
-            <StatusBarItem Margin="5,2" Width="100" HorizontalAlignment="Stretch">
+            <StatusBarItem Width="100" HorizontalAlignment="Stretch">
                 <TextBlock Text="Статус работы"/>
             </StatusBarItem>
             <Separator/>
-            <StatusBarItem Margin="5,2">
+            <StatusBarItem DockPanel.Dock ="Right">
+                <ResizeGrip/>
+            </StatusBarItem>
+            <StatusBarItem>
                 <ProgressBar Value="50" Width="150" Height="10"/>
-            </StatusBarItem>            
+            </StatusBarItem>
         </StatusBar>
-        <TabControl  Background="LightGray" TabStripPlacement="Top" BorderThickness="2" DockPanel.Dock="Left">
-            <TabItem Header="Статистика">
+
+        <TabControl TabStripPlacement="Top" BorderThickness="2" DockPanel.Dock="Left">
+
+            <TabItem x:Name="tabBulkMailLists">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome ToolTip="Рассылки" Icon="Solid_MailBulk" Height="10"/>
+                        <TextBlock Text="Рассылки" VerticalAlignment="Center" Margin="3,0,0,0"/>
+                    </StackPanel>
+                </TabItem.Header>
                 <DockPanel>
-                    
+                    <ToolBarTray DockPanel.Dock="Top" Orientation="Horizontal">
+
+                        <ToolBar ToolTip="Серверы" MinWidth="210">
+                            <fa:ImageAwesome Icon="Solid_Server" ToolTip="Серверы" Style="{StaticResource ToolbarImage}"/>
+                            <ComboBox Width="150" ToolTip="Серверы" SelectedIndex="0"/>
+                            <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
+                                <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
+                            </Button>
+                            <Button ToolTip="Удалить" Style="{StaticResource ToolbarIconButton}">
+                                <fa:ImageAwesome Icon="Solid_MinusCircle" Style="{StaticResource ToolbarIconImage}"/>
+                            </Button>
+                            <Button ToolTip="Редактировать" Style="{StaticResource ToolbarIconButton}">
+                                <fa:ImageAwesome Icon="Solid_Edit" Style="{StaticResource ToolbarIconImage}"/>
+                            </Button>
+                        </ToolBar>
+
+                        <ToolBar ToolTip="Письма" MinWidth="210" Band="1">
+                            <fa:ImageAwesome Icon="Solid_Archive" ToolTip="Письма" Style="{StaticResource ToolbarImage}"/>
+                            <ComboBox Width="150" ToolTip="Письма" SelectedIndex="0"/>
+                            <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
+                                <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
+                            </Button>
+                            <Button ToolTip="Удалить" Style="{StaticResource ToolbarIconButton}">
+                                <fa:ImageAwesome Icon="Solid_MinusCircle" Style="{StaticResource ToolbarIconImage}"/>
+                            </Button>
+                            <Button ToolTip="Редактировать" Style="{StaticResource ToolbarIconButton}">
+                                <fa:ImageAwesome Icon="Solid_Edit" Style="{StaticResource ToolbarIconImage}"/>
+                            </Button>
+                        </ToolBar>
+
+                        <ToolBar ToolTip="Планировщик" MinWidth="190" Band="1">
+                            <fa:ImageAwesome Icon="Solid_CalendarAlt" ToolTip="Письма" Style="{StaticResource ToolbarImage}"/>
+                            <Button ToolTip="Планировщик" Style="{StaticResource ToolbarButton}" Width="130">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:ImageAwesome Icon="Solid_Bell" Style="{StaticResource ToolbarIconImage}"/>
+                                    <TextBlock Text="Планировать" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                        </ToolBar>
+                        
+                        <ToolBar ToolTip="Адресаты" MinWidth="210">
+                            <fa:ImageAwesome Icon="Solid_AddressCard" ToolTip="Письма" Style="{StaticResource ToolbarImage}"/>
+                            <ComboBox Width="150" ToolTip="Адресаты" SelectedIndex="0"/>
+                            <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
+                                <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
+                            </Button>
+                            <Button ToolTip="Удалить" Style="{StaticResource ToolbarIconButton}">
+                                <fa:ImageAwesome Icon="Solid_MinusCircle" Style="{StaticResource ToolbarIconImage}"/>
+                            </Button>
+                            <Button ToolTip="Редактировать" Style="{StaticResource ToolbarIconButton}">
+                                <fa:ImageAwesome Icon="Solid_Edit" Style="{StaticResource ToolbarIconImage}"/>
+                            </Button>
+                        </ToolBar>
+                        
+                    </ToolBarTray>
+                    <DockPanel Width="200">
+                        <TextBlock Text="Списки рассылки" Margin="5" DockPanel.Dock="Top"/>
+                        <ListView/>
+                    </DockPanel>
+                    <DataGrid AutoGenerateColumns="False" Margin="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" MinWidth="60"/>
+                            <DataGridTextColumn Header="Имя" MinWidth="100"/>
+                            <DataGridTextColumn Header="Адрес" MinWidth="100"/>
+                            <DataGridTextColumn Header="Описание" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Планировщик">
+
+            <TabItem x:Name="tabScheduler">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome ToolTip="Планировщик" Icon="Solid_CalendarAlt" Height="10"/>
+                        <TextBlock Text="Планировщик" VerticalAlignment="Center" Margin="3,0,0,0"/>
+                    </StackPanel>
+                </TabItem.Header>
                 <DockPanel>
-                    <ToolBarPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Orientation="Horizontal">
-                        <Button Content="Добавить" Width="60" Height="30" Margin="5"/>
-                        <Button Content="Удалить" Width="60" Height="30" Margin="5"/>
-                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-                        <Button Content="Пуск" Width="60" Height="30" Margin="5" Click="ButtonRunClick"/>
-                        <Button Content="Стоп" Width="60" Height="30" Margin="5" Click="ButtonStopClick"/>
-                    </ToolBarPanel>
-                    <ListView x:Name="lvMailList"  Width="200" DockPanel.Dock="Left">
-                        <TreeView>
-                            <TreeViewItem Header="Список рассылки 1" IsExpanded="True">
-                                <TreeViewItem Header="Сервер 1"/>
-                                <TreeViewItem Header="Сервер 2">
-                                    <TreeViewItem Header="Получатель 1"/>
-                                    <TreeViewItem Header="Получатель 2"/>
-                                </TreeViewItem>
-                            </TreeViewItem>
-                            <TreeViewItem Header="Список рассылки 2">
-                                <TreeViewItem Header="Сервер 2">
-                                    <TreeViewItem Header="Получатель 1"/>
-                                </TreeViewItem>
-                                <TreeViewItem Header="Сервер 3">
-                                    <TreeViewItem Header="Получатель 1"/>
-                                    <TreeViewItem Header="Получатель 2"/>
-                                    <TreeViewItem Header="Получатель 3"/>
-                                </TreeViewItem>
-                            </TreeViewItem>
-                        </TreeView>
-                    </ListView>
-                    <Button Content=">>" Height="50" Width="30" Margin="5"/>
-                    <ListView>                        
-                    </ListView>
-
-
-                </DockPanel>             
+                    <StackPanel Orientation="Vertical" DockPanel.Dock="Left">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Margin" Value="5"/>
+                                <Setter Property="Height" Value="36"/>
+                                <Setter Property="MaxWidth" Value="150"/>
+                                <Setter Property="Background" Value="WhiteSmoke"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <GroupBox Header="Дата запуска">
+                            <Calendar/>
+                        </GroupBox>
+                        <GroupBox Header="Время запуска">
+                            <xctk:TimeSpanUpDown/>
+                        </GroupBox>
+                        <Button Padding="5">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                <fa:ImageAwesome Icon="Solid_AngleRight" Height="20" Foreground="DarkGreen"/>
+                                <TextBlock Text="Запланировать" Margin="10,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Padding="5">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="Solid_AngleDoubleRight" Height="20" Foreground="DarkGreen"/>
+                                <TextBlock Text="Запустить сейчас" Margin="7,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <DataGrid AutoGenerateColumns="False" Background="AliceBlue" AlternatingRowBackground="Aquamarine">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" MinWidth="80"/>
+                            <DataGridTextColumn Header="Рассылка" MinWidth="150"/>
+                            <DataGridTextColumn Header="Дата" MinWidth="120"/>
+                            <DataGridTextColumn Header="Время" MinWidth="120"/>
+                            <DataGridTextColumn Header="Статус" MinWidth="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
             </TabItem>
-            <TabItem Header="Получатели"/>
-            <TabItem Header="Шаблоны">
+
+            <TabItem x:Name="tabRecipients">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome ToolTip="Адресаты" Icon="Solid_AddressBook" Height="10"/>
+                        <TextBlock Text="Адресаты" VerticalAlignment="Center" Margin="3,0,0,0"/>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+            
+
+            <TabItem x:Name="tabTemplates">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome ToolTip="Шаблоны" Icon="Solid_Archive" Height="10"/>
+                        <TextBlock Text="Шаблоны" VerticalAlignment="Center" Margin="3,0,0,0"/>
+                    </StackPanel>
+                </TabItem.Header>
                 <DockPanel >
-                    <ToolBarPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Orientation="Horizontal">                        
+                    <ToolBarPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Orientation="Horizontal">
                         <Button Content="Add" Width="60" Height="30" Margin="5"/>
                         <Button Content="Remove" Width="60" Height="30" Margin="5"/>
                         <Separator Width="20"/>
@@ -89,7 +250,14 @@
                     <RichTextBox/>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Серверы">
+
+            <TabItem x:Name="tabServers">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome ToolTip="Серверы" Icon="Solid_Server" Height="10"/>
+                        <TextBlock Text="Серверы" VerticalAlignment="Center" Margin="3,0,0,0"/>
+                    </StackPanel>
+                </TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical" Width="200">
                         <TextBlock Text="Серверы" Margin="2,2,2,5"/>
@@ -101,6 +269,9 @@
                     </StackPanel>
                 </StackPanel>
             </TabItem>
+
+            <TabItem Header="Статистика" IsEnabled="False" />
+
         </TabControl>
     </DockPanel>
 </Window>
