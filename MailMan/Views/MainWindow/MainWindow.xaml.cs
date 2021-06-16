@@ -46,5 +46,16 @@ namespace MailMan
             ctx.TextForeground = Brushes.Red;
             uDialog.ShowDialog();
         }
+
+        private void OnAboutProgramClick(object sender, RoutedEventArgs e)
+        {
+            UserNotificationDialog uDialog = new();
+            uDialog.Owner = this;
+            var ctx = (UserNotificationDialogViewModel)uDialog.DataContext;
+            ctx.Title = "О программе";
+            ctx.NotificationText = "Рассыльщик почты";
+            ctx.TextForeground = Brushes.Black;
+            uDialog.ShowDialog();
+        }
     }
 }
