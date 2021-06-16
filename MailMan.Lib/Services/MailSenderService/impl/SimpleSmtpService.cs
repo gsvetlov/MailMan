@@ -3,18 +3,19 @@ using System.Net.Mail;
 
 using MailMan.Services.MailSenderService.Enums;
 
-namespace MailMan.Services.MailSenderService.impl
+namespace MailMan.Services.MailSenderService
 {
-    class SimpleSmtpService : IMailSenderService
+    public class SimpleSmtpService : IMailSenderService
     {
         #region singleton implementation
         private static object _lock = new();
-        private static IMailSenderService _instance;
+        private static volatile IMailSenderService _instance;
         public static IMailSenderService GetService()
         {
             if (_instance == null)
                 lock (_lock)
-                    _instance = new SimpleSmtpService();
+                    if (_instance is null)
+                        _instance = new SimpleSmtpService();
             return _instance;
         }
         #endregion
@@ -67,13 +68,13 @@ namespace MailMan.Services.MailSenderService.impl
             }
             catch (Exception e)
             {
-                SendMailResultEvent?.Invoke(this, new(false, e.Message));
+                SendMailResultEvent?.Invoke(this, new SendMailResult(false, e.Message));
             }
         }
 
         private void OnClientSendCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            SendMailResult result = new()
+            var result = new SendMailResult
             {
                 IsSuccessfull = !e.Cancelled && e.Error == null,
                 Message = e?.Error.Message ?? "Operation completed"
