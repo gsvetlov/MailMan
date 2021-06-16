@@ -1,8 +1,9 @@
 ﻿namespace MailMan.Services.MailSenderService
 {
-    public record SendMailResult
+    public class SendMailResult
     {
-        public SendMailResult() { }
+        public SendMailResult() {}
+
         public SendMailResult(bool isSuccessfull, string message)
         {
             IsSuccessfull = isSuccessfull;

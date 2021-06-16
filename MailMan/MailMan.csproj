@@ -7,8 +7,4 @@
     <UserSecretsId>a4175d69-8dbf-4e3b-8cdb-d4a082647a79</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Infrastructure\" />
-  </ItemGroup>
-
 </Project>
