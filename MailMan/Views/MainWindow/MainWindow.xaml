@@ -272,19 +272,21 @@
                 </TabItem.Header>
                 <DockPanel>
                     <GroupBox Header="Письма" DockPanel.Dock="Left">
-                        <ListBox Width="200" DockPanel.Dock="Left">
-                            <ListBoxItem Content="Шаблон 1"/>
-                            <ListBoxItem Content="Шаблон 2"/>
-                            <ListBoxItem Content="Шаблон 3"/>
+                        <ListBox Name="MessagesList" ItemsSource="{Binding Messages}" Width="200">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}" ToolTip="{Binding Text}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
                         </ListBox>
                     </GroupBox>
                     <GroupBox Header="Редактор">
                         <DockPanel>
                             <GroupBox Header="Тема" DockPanel.Dock="Top">
-                                <TextBox AcceptsReturn="False"/>                                
+                                <TextBox Text="{Binding ElementName=MessagesList, Path=SelectedItem.Title}" AcceptsReturn="False"/>                                
                             </GroupBox>
                             <GroupBox Header="Сообщение">
-                                <TextBox AcceptsReturn="True" AcceptsTab="True"/>                                
+                                <TextBox Text="{Binding ElementName=MessagesList, Path=SelectedItem.Text}" AcceptsReturn="True" AcceptsTab="True"/>                                
                             </GroupBox>
                         </DockPanel>
                         
