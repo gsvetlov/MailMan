@@ -75,10 +75,12 @@ namespace MailMan.Services.MailSenderService
 
         private void OnClientSendCompleted(object sender, AsyncCompletedEventArgs e)
         {
+            var isSuccessfull = !e.Cancelled && e.Error == null;
+            var message = e?.Error?.Message ?? "Operation completed";
             var result = new SendMailResult
             {
-                IsSuccessfull = !e.Cancelled && e.Error == null,
-                Message = e?.Error.Message ?? "Operation completed"
+                IsSuccessfull = isSuccessfull,
+                Message = message
             };
             SendMailResultEvent?.Invoke(this, result);
         }
