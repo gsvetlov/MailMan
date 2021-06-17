@@ -105,7 +105,11 @@
 
                         <ToolBar ToolTip="Серверы" MinWidth="210">
                             <fa:ImageAwesome Icon="Solid_Server" ToolTip="Серверы" Style="{StaticResource ToolbarImage}"/>
-                            <ComboBox ItemsSource="{Binding Servers}" DisplayMemberPath="Address" Width="150" ToolTip="Серверы" SelectedIndex="0"/>
+                            <ComboBox Name="ServerList" Width="150" ToolTip="Серверы"
+                                      ItemsSource="{Binding Servers}" 
+                                      SelectedItem="{Binding ServerListSelected, Mode=OneWayToSource}" 
+                                      DisplayMemberPath="Address"
+                                      SelectedIndex="0"/>
                             <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
@@ -143,7 +147,7 @@
                         
                         <ToolBar ToolTip="Адресаты" MinWidth="210">
                             <fa:ImageAwesome Icon="Solid_AddressCard" ToolTip="Адресаты" Style="{StaticResource ToolbarImage}"/>
-                            <ComboBox ItemsSource="{Binding Recipients}" Width="150" ToolTip="Адресаты" SelectedIndex="0">
+                            <ComboBox Name="RecipientsList" ItemsSource="{Binding Recipients}" Width="150" ToolTip="Адресаты" SelectedIndex="0">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
@@ -166,7 +170,10 @@
                         
                         <ToolBar ToolTip="Отправители" MinWidth="210">
                             <fa:ImageAwesome Icon="Solid_Portrait" ToolTip="Отправители" Style="{StaticResource ToolbarImage}"/>
-                            <ComboBox ItemsSource="{Binding Senders}" Width="150" ToolTip="Отправители" SelectedIndex="0">
+                            <ComboBox Name="SendersList" Width="150" ToolTip="Отправители"                                      
+                                      ItemsSource="{Binding Senders}" 
+                                      SelectedItem="{Binding SenderListSelected, Mode=OneWayToSource}" 
+                                      SelectedIndex="0">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
@@ -236,7 +243,7 @@
                                         <TextBlock Text="Запланировать" Margin="10,0,0,0"/>
                                     </StackPanel>
                                 </Button>
-                                <Button>
+                                <Button Click="OnSendNowButtonClick">
                                     <StackPanel Orientation="Horizontal">
                                         <fa:ImageAwesome Icon="Solid_AngleDoubleRight" Height="20" Foreground="DarkGreen"/>
                                         <TextBlock Text="Запустить" Margin="10,0,10,0"/>

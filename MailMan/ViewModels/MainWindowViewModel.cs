@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using MailMan.Data;
 using MailMan.Models;
+using MailMan.Services.MailSenderService;
 using MailMan.ViewModels.Base;
 
 namespace MailMan.ViewModels
@@ -22,6 +23,7 @@ namespace MailMan.ViewModels
         public ObservableCollection<Sender> Senders { get => _Senders; set => Set(ref _Senders, value); }
         public ObservableCollection<Recipient> Recipients { get => _Recipients; set => Set(ref _Recipients, value); }
         public ObservableCollection<Message> Messages { get => _Messages; set => Set(ref _Messages, value); }
+        public IMailSenderService MailSender { get; }
 
         public MainWindowViewModel()
         {
@@ -30,6 +32,10 @@ namespace MailMan.ViewModels
             _Senders = new(TestData.Senders);
             _Recipients = new(TestData.Recipients);
             _Messages = new(TestData.Messages);
+            MailSender = SimpleSmtpService.GetService();
         }
+
+        public Server ServerListSelected { get; set; }
+        public Sender SenderListSelected { get; set; }
     }
 }
