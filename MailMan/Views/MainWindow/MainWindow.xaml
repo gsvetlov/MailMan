@@ -91,7 +91,7 @@
             </StatusBarItem>
         </StatusBar>
 
-        <TabControl TabStripPlacement="Top" BorderThickness="2" DockPanel.Dock="Left">
+        <TabControl TabStripPlacement="Top" BorderThickness="2">
 
             <TabItem x:Name="tabBulkMailLists">
                 <TabItem.Header>
@@ -105,7 +105,7 @@
 
                         <ToolBar ToolTip="Серверы" MinWidth="210">
                             <fa:ImageAwesome Icon="Solid_Server" ToolTip="Серверы" Style="{StaticResource ToolbarImage}"/>
-                            <ComboBox Width="150" ToolTip="Серверы" SelectedIndex="0"/>
+                            <ComboBox ItemsSource="{Binding Servers}" DisplayMemberPath="Address" Width="150" ToolTip="Серверы" SelectedIndex="0"/>
                             <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
@@ -118,7 +118,7 @@
                         </ToolBar>
 
                         <ToolBar ToolTip="Письма" MinWidth="210" Band="1">
-                            <fa:ImageAwesome Icon="Solid_Archive" ToolTip="Письма" Style="{StaticResource ToolbarImage}"/>
+                            <fa:ImageAwesome Icon="Solid_EnvelopeOpenText" ToolTip="Письма" Style="{StaticResource ToolbarImage}"/>
                             <ComboBox Width="150" ToolTip="Письма" SelectedIndex="0"/>
                             <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
@@ -143,7 +143,39 @@
                         
                         <ToolBar ToolTip="Адресаты" MinWidth="210">
                             <fa:ImageAwesome Icon="Solid_AddressCard" ToolTip="Адресаты" Style="{StaticResource ToolbarImage}"/>
-                            <ComboBox Width="150" ToolTip="Адресаты" SelectedIndex="0"/>
+                            <ComboBox ItemsSource="{Binding Recipients}" Width="150" ToolTip="Адресаты" SelectedIndex="0">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
+                                            <TextBlock Text="{Binding Name}"/>
+                                            <TextBlock Text="{Binding Address}" Margin="3,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
+                                <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
+                            </Button>
+                            <Button ToolTip="Удалить" Style="{StaticResource ToolbarIconButton}">
+                                <fa:ImageAwesome Icon="Solid_MinusCircle" Style="{StaticResource ToolbarIconImage}"/>
+                            </Button>
+                            <Button ToolTip="Редактировать" Style="{StaticResource ToolbarIconButton}">
+                                <fa:ImageAwesome Icon="Solid_Edit" Style="{StaticResource ToolbarIconImage}"/>
+                            </Button>
+                        </ToolBar>
+                        
+                        <ToolBar ToolTip="Отправители" MinWidth="210">
+                            <fa:ImageAwesome Icon="Solid_Portrait" ToolTip="Отправители" Style="{StaticResource ToolbarImage}"/>
+                            <ComboBox ItemsSource="{Binding Senders}" Width="150" ToolTip="Отправители" SelectedIndex="0">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
+                                            <TextBlock Text="{Binding Name}"/>
+                                            <TextBlock Text="{Binding Address}" Margin="3,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>                                    
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
                             <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
@@ -156,18 +188,19 @@
                         </ToolBar>
                         
                     </ToolBarTray>
-                    <DockPanel Width="200">
-                        <TextBlock Text="Списки рассылки" Margin="5" DockPanel.Dock="Top"/>
-                        <ListView/>
-                    </DockPanel>
-                    <DataGrid AutoGenerateColumns="False" Margin="2">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" MinWidth="60"/>
-                            <DataGridTextColumn Header="Имя" MinWidth="100"/>
-                            <DataGridTextColumn Header="Адрес" MinWidth="100"/>
-                            <DataGridTextColumn Header="Описание" Width="*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <GroupBox Header="Списки рассылки" Margin="2">
+                        <DockPanel>
+                            <ListBox Width="200" DockPanel.Dock="Left"/>
+                            <DataGrid ItemsSource="{Binding Recipients}" Margin="4,0,0,0">                                
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" MinWidth="60"/>
+                                    <DataGridTextColumn Header="Имя" Binding="{Binding Name}" MinWidth="100"/>
+                                    <DataGridTextColumn Header="Адрес" Binding="{Binding Address}" MinWidth="100"/>
+                                    <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>                            
+                        </DockPanel>
+                    </GroupBox>
                 </DockPanel>
             </TabItem>
 
@@ -233,7 +266,7 @@
             <TabItem x:Name="tabTemplates">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <fa:ImageAwesome ToolTip="Шаблоны" Icon="Solid_Archive" Height="10"/>
+                        <fa:ImageAwesome ToolTip="Шаблоны" Icon="Solid_EnvelopeOpenText" Height="10"/>
                         <TextBlock Text="Шаблоны" VerticalAlignment="Center" Margin="3,0,0,0"/>
                     </StackPanel>
                 </TabItem.Header>
