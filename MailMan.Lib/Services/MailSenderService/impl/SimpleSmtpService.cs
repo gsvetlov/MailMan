@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Net.Mail;
 
 using MailMan.Services.MailSenderService.Enums;
@@ -51,7 +52,7 @@ namespace MailMan.Services.MailSenderService
             {
                 Host = server.Host,
                 Port = server.Port,
-                EnableSsl = true,
+                EnableSsl = server.UseSSL,
                 Credentials = server.Credentials
             };
             client.SendCompleted += OnClientSendCompleted;
@@ -72,7 +73,7 @@ namespace MailMan.Services.MailSenderService
             }
         }
 
-        private void OnClientSendCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        private void OnClientSendCompleted(object sender, AsyncCompletedEventArgs e)
         {
             var result = new SendMailResult
             {
