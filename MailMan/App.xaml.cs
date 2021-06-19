@@ -2,6 +2,7 @@
 using System.Windows;
 
 using MailMan.Data;
+using MailMan.Services.MailSenderService;
 using MailMan.Services.Repositories;
 using MailMan.ViewModels;
 
@@ -33,6 +34,7 @@ namespace MailMan
                 .AddSingleton<IRecipientRepository, DebugRecipientRepository>()
                 .AddSingleton<IMessageRepository, DebugMessageRepository>()
                 .AddSingleton<IMailingListRepository, DebugMailingListRepository>()
+                .AddSingleton<IMailSenderService, DebugMailService>()
                 .AddTransient<MainWindowViewModel>()
                 .AddTransient<NotifyUserDialogViewModel>();
         }
