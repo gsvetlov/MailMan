@@ -7,4 +7,17 @@
     <UserSecretsId>a4175d69-8dbf-4e3b-8cdb-d4a082647a79</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Configuration\StaticIGNORE.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="3.8.2" />
+    <PackageReference Include="FontAwesome5" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MailMan.Lib\MailMan.Lib.csproj" />
+  </ItemGroup>
+
 </Project>

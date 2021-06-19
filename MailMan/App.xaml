@@ -4,6 +4,13 @@
              xmlns:local="clr-namespace:MailMan"
              StartupUri="Views/MainWindow/MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="GridLinesVisibility" Value="Vertical"/>
+            <Setter Property="VerticalGridLinesBrush" Value="LightGray"/>
+            <Setter Property="AlternatingRowBackground" Value="Gainsboro"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+        </Style>         
     </Application.Resources>
 </Application>
