@@ -105,25 +105,25 @@
 
                         <ToolBar ToolTip="Серверы" MinWidth="210">
                             <fa:ImageAwesome Icon="Solid_Server" ToolTip="Серверы" Style="{StaticResource ToolbarImage}"/>
-                            <ComboBox Name="ServerList" Width="150" ToolTip="Серверы"
+                            <ComboBox Name="ServersList" Width="150" ToolTip="Серверы"
                                       ItemsSource="{Binding Servers}" 
                                       SelectedItem="{Binding ServerListSelected, Mode=OneWayToSource}" 
                                       DisplayMemberPath="Address"
                                       SelectedIndex="0"/>
-                            <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
+                            <Button ToolTip="Добавить"  Click="OnAddServerButtonClick" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
-                            <Button ToolTip="Удалить" Style="{StaticResource ToolbarIconButton}">
+                            <Button ToolTip="Удалить"  Click="OnRemoveServerButtonClick" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_MinusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
-                            <Button ToolTip="Редактировать" Style="{StaticResource ToolbarIconButton}">
+                            <Button ToolTip="Редактировать" Click="OnEditServerButtonClick" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_Edit" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
                         </ToolBar>
 
                         <ToolBar ToolTip="Письма" MinWidth="210" Band="1">
                             <fa:ImageAwesome Icon="Solid_EnvelopeOpenText" ToolTip="Письма" Style="{StaticResource ToolbarImage}"/>
-                            <ComboBox Width="150" ToolTip="Письма" SelectedIndex="0"/>
+                            <ComboBox Name="cbMesagesList" ItemsSource="{Binding Messages}" Width="150" ToolTip="Письма"/>
                             <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
@@ -183,13 +183,13 @@
                                     </DataTemplate>                                    
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
+                            <Button ToolTip="Добавить" Click="OnAddSenderButtonClick" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
-                            <Button ToolTip="Удалить" Style="{StaticResource ToolbarIconButton}">
+                            <Button ToolTip="Удалить" Click="OnDeleteSenderButtonClick" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_MinusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
-                            <Button ToolTip="Редактировать" Style="{StaticResource ToolbarIconButton}">
+                            <Button ToolTip="Редактировать" Click="OnEditSenderButtonClick" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_Edit" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
                         </ToolBar>
