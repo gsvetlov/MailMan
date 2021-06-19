@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 using MailMan.Data;
 using MailMan.Models;
@@ -12,10 +7,10 @@ using MailMan.ViewModels.Base;
 
 namespace MailMan.ViewModels
 {
-    class MainWindowViewModel : ViewModel
+    public class MainWindowViewModel : ViewModel
     {
 
-        private ObservableCollection<Server> _Servers; 
+        private ObservableCollection<Server> _Servers;
         private ObservableCollection<Sender> _Senders;
         private ObservableCollection<Recipient> _Recipients;
         private ObservableCollection<Message> _Messages;
@@ -28,7 +23,7 @@ namespace MailMan.ViewModels
         public MainWindowViewModel()
         {
             _title = "MailMan: mass-email app";
-            _Servers = new (TestData.Servers);
+            _Servers = new(TestData.Servers);
             _Senders = new(TestData.Senders);
             _Recipients = new(TestData.Recipients);
             _Messages = new(TestData.Messages);

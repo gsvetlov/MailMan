@@ -5,7 +5,7 @@ using MailMan.ViewModels.Base;
 
 namespace MailMan.ViewModels
 {
-    class UserNotificationDialogViewModel : ViewModel
+    public class UserNotificationDialogViewModel : ViewModel
     {
         private string _text = "This is text";
         private string _button = "Ok";
