@@ -28,7 +28,7 @@ namespace MailMan
         {
             services
                 .AddTransient<MainWindowViewModel>()
-                .AddTransient<UserNotificationDialogViewModel>();                
+                .AddTransient<NotifyUserDialogViewModel>();                
         }
 
         protected override void OnStartup(StartupEventArgs e)

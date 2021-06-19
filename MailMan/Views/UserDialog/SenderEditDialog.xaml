@@ -15,14 +15,14 @@
             <TextBox Name="tbName" Text="Имя"/>
         </GroupBox>
         <GroupBox Header="Адрес">
-            <TextBox Name="tbAddress" Text="Адрес" PreviewTextInput="PreviewAddressInput"/>
+            <TextBox Name="tbAddress" Text="Адрес"/>
         </GroupBox>
         <GroupBox Header="Описание" Height="80">            
             <TextBox Name="tbDescription" Text="Описание" AcceptsReturn="True" AcceptsTab="True"/>
         </GroupBox>
         <UniformGrid Margin="20" Columns="2">
-            <Button IsDefault="True" Click="ButtonOk_Click" Grid.Column="0" Content="Ok" Padding="4" Width="80" Margin="20,0,0,0"/>
-            <Button IsCancel="True" Click="ButtonCancel_Click" Grid.Column="1" Content="Cancel" Padding="4" Width="80" Margin="0,0,20,0"/>            
+            <Button IsDefault="True" Grid.Column="0" Content="Ok" Padding="4" Width="80" Margin="20,0,0,0"/>
+            <Button IsCancel="True" Grid.Column="1" Content="Cancel" Padding="4" Width="80" Margin="0,0,20,0"/>            
         </UniformGrid>
     </StackPanel>
 </Window>

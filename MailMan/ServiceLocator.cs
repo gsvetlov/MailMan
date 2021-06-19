@@ -13,6 +13,6 @@ namespace MailMan
     public class ServiceLocator
     {
         public MainWindowViewModel MainWindowViewModel => App.Services.GetRequiredService<MainWindowViewModel>();
-        public UserNotificationDialogViewModel UserNotificationDialogViewModel => App.Services.GetRequiredService<UserNotificationDialogViewModel>();
+        public NotifyUserDialogViewModel NotifyUserDialogViewModel => App.Services.GetRequiredService<NotifyUserDialogViewModel>();
     }
 }
