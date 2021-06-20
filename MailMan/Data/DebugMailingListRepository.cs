@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using MailMan.Models;
 using MailMan.Services.Repositories;
@@ -7,6 +9,6 @@ namespace MailMan.Data
 {
     class DebugMailingListRepository : DebugRepository<MailingList>, IMailingListRepository
     {
-        public override MailingList Create(params object[] parameters) => throw new NotImplementedException();
+        public DebugMailingListRepository() : base() { }
     }
 }

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MailMan.Models.Base;
+
 namespace MailMan.Models
 {
-    public class MailingList
+    public class MailingList : BaseModel
     {
         public string Name { get; set; }
         public List<Sender> Senders { get; set; }

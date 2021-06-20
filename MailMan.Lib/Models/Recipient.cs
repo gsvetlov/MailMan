@@ -1,9 +1,9 @@
-﻿namespace MailMan.Models
-{
-    public class Recipient
-    {
-        public int Id { get; set; }
+﻿using MailMan.Models.Base;
 
+namespace MailMan.Models
+{
+    public class Recipient : BaseModel
+    {
         public string Name { get; set; }
 
         public string Address { get; set; }

@@ -1,6 +1,8 @@
-﻿namespace MailMan.Models
+﻿using MailMan.Models.Base;
+
+namespace MailMan.Models
 {
-    public class Message
+    public class Message : BaseModel
     {
         public string Title { get; set; }
 

@@ -1,8 +1,9 @@
-﻿namespace MailMan.Models
+﻿using MailMan.Models.Base;
+
+namespace MailMan.Models
 {
-    public class Server
+    public class Server : BaseModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
 
         public string Address { get; set; }

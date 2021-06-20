@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 
 using MailMan.Models;
 using MailMan.Services.Repositories;
@@ -9,6 +9,6 @@ namespace MailMan.Data
     {
         public DebugServerRepository() : base(TestData.Servers) { }
 
-        public override Server Create(params object[] parameters) => throw new NotImplementedException();
+        
     }
 }

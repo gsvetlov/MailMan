@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using MailMan.Models;
 using MailMan.Services.Repositories;
@@ -9,6 +10,6 @@ namespace MailMan.Data
     {
         public DebugMessageRepository() : base(TestData.Messages) { }
 
-        public override Message Create(params object[] parameters) => throw new NotImplementedException();
+        
     }
 }

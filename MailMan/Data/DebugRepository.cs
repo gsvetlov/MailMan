@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
+using MailMan.Models.Base;
 using MailMan.Services.Repositories.Base;
 
 namespace MailMan.Data
 {
-    public abstract class DebugRepository<T> : IRepository<T> where T : class
+    public abstract class DebugRepository<T> : IRepository<T> where T : BaseModel, new()
     {
         protected readonly List<T> collection;
 
         public DebugRepository(List<T> collection) => this.collection = collection ?? throw new ArgumentNullException(nameof(collection));
-        public DebugRepository() => this.collection = new();
+        public DebugRepository() => collection = new();
 
-        public abstract T Create(params object[] parameters); //  => throw new NotImplementedException()
+        public virtual T Create(params object[] parameters)
+        {
+            if (parameters is null) throw new ArgumentNullException(nameof(parameters));
+            if (parameters[0] is not T entity) throw new ArgumentException($"parameter is not {typeof(T)}");
+            entity.Id = collection.Max(e => e.Id) + 1;
+            return Add(entity) ? entity : throw new InvalidOperationException("Failed to add new instance to repo");
+        }
         public virtual bool Add(T entity)
         {
             collection.Add(entity);
