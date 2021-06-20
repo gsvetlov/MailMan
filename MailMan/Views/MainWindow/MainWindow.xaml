@@ -4,15 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailMan"
-              
-        xmlns:vm="clr-namespace:MailMan.ViewModels"
+        
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Title="{Binding Title}" Height="600" Width="800">
-    <Window.DataContext>
-        <vm:MainWindowViewModel/>
-    </Window.DataContext>
+    
     <Window.Resources>
         <Style TargetType="{x:Type Menu}">
             <Setter Property="DockPanel.Dock" Value="Top"/>
@@ -70,7 +67,7 @@
                         <TextBlock Text ="About" Margin="5,0"/>
                     </StackPanel>
                 </MenuItem.Header>
-                <MenuItem Header="О программе" Click="OnAboutProgramClick"/>
+                <MenuItem Header="О программе"/>
             </MenuItem>
         </Menu>
 
@@ -103,39 +100,47 @@
                 <DockPanel>
                     <ToolBarTray DockPanel.Dock="Top" Orientation="Horizontal">
 
-                        <ToolBar ToolTip="Серверы" MinWidth="210">
+                        <ToolBar ToolTip="Серверы" MinWidth="210" Band="0">
                             <fa:ImageAwesome Icon="Solid_Server" ToolTip="Серверы" Style="{StaticResource ToolbarImage}"/>
                             <ComboBox Name="ServersList" Width="150" ToolTip="Серверы"
                                       ItemsSource="{Binding Servers}" 
-                                      SelectedItem="{Binding ServerListSelected, Mode=OneWayToSource}" 
+                                      SelectedItem="{Binding ServerListSelected}" 
                                       DisplayMemberPath="Address"
                                       SelectedIndex="0"/>
-                            <Button ToolTip="Добавить"  Click="OnAddServerButtonClick" Style="{StaticResource ToolbarIconButton}">
+                            <Button Command="{Binding AddServerCommand}" ToolTip="Добавить"  Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
-                            <Button ToolTip="Удалить"  Click="OnRemoveServerButtonClick" Style="{StaticResource ToolbarIconButton}">
+                            <Button Command="{Binding RemoveServerCommand}" CommandParameter="{Binding ServerListSelected}"
+                                    ToolTip="Удалить" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_MinusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
-                            <Button ToolTip="Редактировать" Click="OnEditServerButtonClick" Style="{StaticResource ToolbarIconButton}">
+                            <Button Command="{Binding EditServerCommand}" CommandParameter="{Binding ServerListSelected}"
+                                ToolTip="Редактировать" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_Edit" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
                         </ToolBar>
 
                         <ToolBar ToolTip="Письма" MinWidth="210" Band="1">
                             <fa:ImageAwesome Icon="Solid_EnvelopeOpenText" ToolTip="Письма" Style="{StaticResource ToolbarImage}"/>
-                            <ComboBox Name="cbMesagesList" ItemsSource="{Binding Messages}" Width="150" ToolTip="Письма"/>
-                            <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
+                            <ComboBox Name="cbMesagesList" Width="150" ToolTip="Письма"
+                                      ItemsSource="{Binding Messages}"
+                                      SelectedItem="{Binding MessageListSelected}"
+                                      DisplayMemberPath="Title"
+                                      SelectedIndex="0"/>
+                            <Button Command="{Binding AddMessageCommand}" ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
-                            <Button ToolTip="Удалить" Style="{StaticResource ToolbarIconButton}">
+                            <Button Command="{Binding RemoveMessageCommand}" CommandParameter="{Binding MessageListSelected}"
+                                    ToolTip="Удалить" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_MinusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
-                            <Button ToolTip="Редактировать" Style="{StaticResource ToolbarIconButton}">
+                            <Button Command="{Binding EditMessageCommand}" CommandParameter="{Binding MessageListSelected}"
+                                    ToolTip="Редактировать" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_Edit" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
                         </ToolBar>
 
-                        <ToolBar ToolTip="Планировщик" MinWidth="190" Band="1">
+                        <ToolBar ToolTip="Планировщик" MinWidth="190" Band="2">
                             <fa:ImageAwesome Icon="Solid_CalendarAlt" ToolTip="Письма" Style="{StaticResource ToolbarImage}"/>
                             <Button ToolTip="Планировщик" Style="{StaticResource ToolbarButton}" Width="130">
                                 <StackPanel Orientation="Horizontal">
@@ -145,9 +150,12 @@
                             </Button>
                         </ToolBar>
                         
-                        <ToolBar ToolTip="Адресаты" MinWidth="210">
+                        <ToolBar ToolTip="Адресаты" MinWidth="210" Band="1">
                             <fa:ImageAwesome Icon="Solid_AddressCard" ToolTip="Адресаты" Style="{StaticResource ToolbarImage}"/>
-                            <ComboBox Name="RecipientsList" ItemsSource="{Binding Recipients}" Width="150" ToolTip="Адресаты" SelectedIndex="0">
+                            <ComboBox Name="RecipientsList"  Width="150" ToolTip="Адресаты"
+                                      ItemsSource="{Binding Recipients}"
+                                      SelectedItem="{Binding RecipientListSelected}"
+                                      SelectedIndex="0">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
@@ -157,22 +165,24 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <Button ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
+                            <Button Command="{Binding AddRecipientCommand}" ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
-                            <Button ToolTip="Удалить" Style="{StaticResource ToolbarIconButton}">
+                            <Button Command="{Binding RemoveRecipientCommand}" CommandParameter="{Binding RecipientListSelected}"
+                                    ToolTip="Удалить" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_MinusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
-                            <Button ToolTip="Редактировать" Style="{StaticResource ToolbarIconButton}">
+                            <Button Command="{Binding EditRecipientCommand}" CommandParameter="{Binding RecipientListSelected}"
+                                    ToolTip="Редактировать" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_Edit" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
                         </ToolBar>
                         
-                        <ToolBar ToolTip="Отправители" MinWidth="210">
+                        <ToolBar ToolTip="Отправители" MinWidth="210" Band="0">
                             <fa:ImageAwesome Icon="Solid_Portrait" ToolTip="Отправители" Style="{StaticResource ToolbarImage}"/>
                             <ComboBox Name="SendersList" Width="150" ToolTip="Отправители"                                      
                                       ItemsSource="{Binding Senders}" 
-                                      SelectedItem="{Binding SenderListSelected, Mode=OneWayToSource}" 
+                                      SelectedItem="{Binding SenderListSelected}" 
                                       SelectedIndex="0">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
@@ -183,13 +193,15 @@
                                     </DataTemplate>                                    
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <Button ToolTip="Добавить" Click="OnAddSenderButtonClick" Style="{StaticResource ToolbarIconButton}">
+                            <Button Command="{Binding AddSenderCommand}" ToolTip="Добавить" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
-                            <Button ToolTip="Удалить" Click="OnDeleteSenderButtonClick" Style="{StaticResource ToolbarIconButton}">
+                            <Button Command="{Binding RemoveSenderCommand}" CommandParameter="{Binding SenderListSelected}"
+                                    ToolTip="Удалить" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_MinusCircle" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
-                            <Button ToolTip="Редактировать" Click="OnEditSenderButtonClick" Style="{StaticResource ToolbarIconButton}">
+                            <Button Command="{Binding EditSenderCommand}" CommandParameter="{Binding SenderListSelected}"
+                                    ToolTip="Редактировать" Style="{StaticResource ToolbarIconButton}">
                                 <fa:ImageAwesome Icon="Solid_Edit" Style="{StaticResource ToolbarIconImage}"/>
                             </Button>
                         </ToolBar>
@@ -243,7 +255,7 @@
                                         <TextBlock Text="Запланировать" Margin="10,0,0,0"/>
                                     </StackPanel>
                                 </Button>
-                                <Button Click="OnSendNowButtonClick">
+                                <Button>
                                     <StackPanel Orientation="Horizontal">
                                         <fa:ImageAwesome Icon="Solid_AngleDoubleRight" Height="20" Foreground="DarkGreen"/>
                                         <TextBlock Text="Запустить" Margin="10,0,10,0"/>

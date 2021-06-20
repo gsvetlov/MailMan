@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:MailMan"
              StartupUri="Views/MainWindow/MainWindow.xaml">
     <Application.Resources>
+        <local:ServiceLocator x:Key="Locator"/>
         <Style TargetType="DataGrid">
             <Setter Property="AutoGenerateColumns" Value="False"/>
             <Setter Property="GridLinesVisibility" Value="Vertical"/>

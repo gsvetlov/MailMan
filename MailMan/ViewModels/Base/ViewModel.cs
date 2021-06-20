@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace MailMan.ViewModels.Base
 {
-    internal abstract class ViewModel : INotifyPropertyChanged
+    public abstract class ViewModel : INotifyPropertyChanged
     {
         protected string _title = "Title";
         public string Title { get => _title; set => Set(ref _title, value); }

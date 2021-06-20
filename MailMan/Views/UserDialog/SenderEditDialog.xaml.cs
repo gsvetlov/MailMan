@@ -6,11 +6,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
+using MailMan.Models;
+
 namespace MailMan.Views.UserDialog
 {
-    /// <summary>
-    /// Interaction logic for SenderEditDialog.xaml
-    /// </summary>
     public partial class SenderEditDialog : Window
     {
         private SenderEditDialog()
@@ -18,29 +17,22 @@ namespace MailMan.Views.UserDialog
             InitializeComponent();
         }
 
-        public static bool ShowDialog(string title, ref string name, ref string address, ref string description)
+        public static bool ShowDialog(string title, Sender sender)
         {
             var window = new SenderEditDialog
             {
                 Title = title,
-                tbName = { Text = name },
-                tbAddress = { Text = address },
-                tbDescription = { Text = description },
+                tbName = { Text = sender.Name },
+                tbAddress = { Text = sender.Address },
+                tbDescription = { Text = sender.Description },
                 Owner = Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w.IsActive)
             };
-            if (window.ShowDialog() is not true) return false;
-            name = window.tbName.Text;
-            address = window.tbAddress.Text;
-            description = window.tbDescription.Text;
+            if (window.ShowDialog() is false) return false;
+            sender.Name = window.tbName.Text;
+            sender.Address = window.tbAddress.Text;
+            sender.Description = window.tbDescription.Text;
             return true;
-        }
 
-        public static bool Create(string title, out string name, out string address, out string description)
-        {
-            name = null;
-            address = null;
-            description = null;
-            return ShowDialog(title, ref name, ref address, ref description);
         }
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)

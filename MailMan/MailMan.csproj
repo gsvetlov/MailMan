@@ -8,12 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Configuration\StaticIGNORE.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="3.8.2" />
     <PackageReference Include="FontAwesome5" Version="2.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

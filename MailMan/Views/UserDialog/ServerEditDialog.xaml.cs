@@ -3,11 +3,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
+using MailMan.Models;
+
 namespace MailMan.Views.UserDialog
 {
-    /// <summary>
-    /// Interaction logic for ServerEditDialog.xaml
-    /// </summary>
     public partial class ServerEditDialog : Window
     {
         /*public ServerEditDialog()
@@ -88,6 +87,30 @@ namespace MailMan.Views.UserDialog
             Login = window.Login.Text;
             Password = window.Password.Password;
             return true;
+        }
+        public static bool ShowDialog(string title, Server server)
+        {
+            var window = new ServerEditDialog
+            {
+                Title = title,
+                ServerName = { Text = server.Name },
+                ServerAddress = { Text = server.Address },
+                ServerPort = { Text = server.Port.ToString() },
+                ServerSSL = { IsChecked = server.UseSSL },
+                Login = { Text = server.Login },
+                Password = { Password = server.Password },
+                ServerDescription = { Text = server.Description },
+                Owner = Application.Current.Windows.Cast<Window>().FirstOrDefault(window => window.IsActive)
+            };
+            if (window.ShowDialog() is false) return false;
+            server.Name = window.ServerName.Text;
+            server.Address = window.ServerAddress.Text;
+            server.Port = int.Parse(window.ServerPort.Text);
+            server.UseSSL = window.ServerSSL.IsChecked ?? false;
+            server.Login = window.Login.Text;
+            server.Password = window.Password.Password;
+            return true;
+
         }
         /// <summary>
         /// Метод, позволяющий отобразить диалог создания нового сервера

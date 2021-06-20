@@ -1,0 +1,14 @@
+﻿<Window x:Class="MailMan.Views.UserDialog.NotifyUserDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MailMan.Views.UserDialog" mc:Ignorable="d"
+        xmlns:cmd="clr-namespace:MailMan.ViewModels.Commands"
+        DataContext="{Binding Source={StaticResource Locator}, Path=NotifyUserDialogViewModel}"
+        Title="{Binding Title}" Height="200" Width="400">
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="{Binding NotificationText}" Foreground="{Binding TextForeground}" FontSize="16" HorizontalAlignment="Center" Margin="10,30"/>
+        <Button Click="{Binding Source={}}" Content="{Binding ButtonContent}" Width="50" Margin="10"/>
+    </StackPanel>
+</Window>
