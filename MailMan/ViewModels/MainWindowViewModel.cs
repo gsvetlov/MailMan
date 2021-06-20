@@ -86,7 +86,7 @@ namespace MailMan.ViewModels
         private void OnEditSenderCommandExecuted(object obj)
         {
             var select = SenderListSelected;
-            EditCommand(obj, Senders, senderRepository, SenderEditDialog.ShowDialog, "Редактирование отправителя", ref select);
+            EditCommand(obj, Senders, senderRepository, SenderEditDialog.ShowDialog, "Редактировать отправителя", ref select);
             SenderListSelected = select;
         }
         #endregion
@@ -108,7 +108,7 @@ namespace MailMan.ViewModels
         private void OnAddServerCommandExecuted(object obj)
         {
             var select = ServerListSelected;
-            AddCommand(Servers, serverRepository, ServerEditDialog.ShowDialog, "Добавить отправителя", ref select);
+            AddCommand(Servers, serverRepository, ServerEditDialog.ShowDialog, "Добавить сервер", ref select);
             ServerListSelected = select;
         }
         #endregion
@@ -119,7 +119,7 @@ namespace MailMan.ViewModels
         private void OnEditServerCommandExecuted(object obj)
         {
             var select = ServerListSelected;
-            EditCommand(obj, Servers, serverRepository, ServerEditDialog.ShowDialog, "Добавить отправителя", ref select);
+            EditCommand(obj, Servers, serverRepository, ServerEditDialog.ShowDialog, "Редактировать сервер", ref select);
             ServerListSelected = select;
         }
         #endregion
