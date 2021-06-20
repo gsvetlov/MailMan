@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Windows.Input;
 
-using MailMan.Data;
 using MailMan.Models;
 using MailMan.Services.MailSenderService;
 using MailMan.Services.Repositories;
@@ -23,12 +22,13 @@ namespace MailMan.ViewModels
         private ObservableCollection<Sender> _Senders;
         private ObservableCollection<Recipient> _Recipients;
         private ObservableCollection<Message> _Messages;
+        private ObservableCollection<MailingList> _MailingLists;
         public ObservableCollection<Server> Servers { get => _Servers; set => Set(ref _Servers, value); }
         public ObservableCollection<Sender> Senders { get => _Senders; set => Set(ref _Senders, value); }
         public ObservableCollection<Recipient> Recipients { get => _Recipients; set => Set(ref _Recipients, value); }
         public ObservableCollection<Message> Messages { get => _Messages; set => Set(ref _Messages, value); }
+        public ObservableCollection<MailingList> MailingLists { get => _MailingLists; set => Set(ref _MailingLists, value); }
 
-       
         public MainWindowViewModel(IServerRepository serverRepository,
                                    ISenderRepository senderRepository,
                                    IRecipientRepository recipientRepository,
@@ -47,9 +47,29 @@ namespace MailMan.ViewModels
             _Senders = new(senderRepository.GetAll());
             _Recipients = new(recipientRepository.GetAll());
             _Messages = new(messageRepository.GetAll());
+            _MailingLists = new(mailingListRepository.GetAll());
         }
 
-        public Server ServerListSelected { get; set; }
-        public Sender SenderListSelected { get; set; }
+        private Server _ServerListSelected;
+        public Server ServerListSelected { get => _ServerListSelected; set => Set(ref _ServerListSelected, value); }
+        private Sender _SenderListSelected;
+        public Sender SenderListSelected { get => _SenderListSelected; set => Set(ref _SenderListSelected, value); }
+        private Recipient _RecipientListSelected;
+        public Recipient RecipientListSelected { get => _RecipientListSelected; set => Set(ref _RecipientListSelected, value); }
+        private Message _MessageListSelected;
+        public Message MessageListSelected { get => _MessageListSelected; set => Set(ref _MessageListSelected, value); }
+        private MailingList _MailingListSelected;
+        public MailingList MailingListSelected { get => _MailingListSelected; set => Set(ref _MailingListSelected, value); }
+
+        private ICommand _AddServerCommand;
+        public ICommand AddServerCommand => _AddServerCommand ??= new LambdaCommand(OnAddServerCommandExecuted, CanAddServerCommandExecute);
+
+        private bool CanAddServerCommandExecute(object arg) => arg is Server;
+        private void OnAddServerCommandExecuted(object obj)
+        {
+            if (obj is not Server server) return;
+
+
+        }
     }
 }
