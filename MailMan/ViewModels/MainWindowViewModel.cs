@@ -14,29 +14,23 @@ namespace MailMan.ViewModels
 {
     public class MainWindowViewModel : ViewModel
     {
-        private IServerRepository serverRepository;
-        private ISenderRepository senderRepository;
-        private IRecipientRepository recipientRepository;
-        private IMessageRepository messageRepository;
-        private IMailingListRepository mailingListRepository;
+        #region Репозитории
+
+        private IRepository<Server> serverRepository;
+        private IRepository<Sender> senderRepository;
+        private IRepository<Recipient> recipientRepository;
+        private IRepository<Message> messageRepository;
+        private IRepository<MailingList> mailingListRepository;
         private IMailSenderService mailSenderService;
 
-        private ObservableCollection<Server> _Servers;
-        private ObservableCollection<Sender> _Senders;
-        private ObservableCollection<Recipient> _Recipients;
-        private ObservableCollection<Message> _Messages;
-        private ObservableCollection<MailingList> _MailingLists;
-        public ObservableCollection<Server> Servers { get => _Servers; set => Set(ref _Servers, value); }
-        public ObservableCollection<Sender> Senders { get => _Senders; set => Set(ref _Senders, value); }
-        public ObservableCollection<Recipient> Recipients { get => _Recipients; set => Set(ref _Recipients, value); }
-        public ObservableCollection<Message> Messages { get => _Messages; set => Set(ref _Messages, value); }
-        public ObservableCollection<MailingList> MailingLists { get => _MailingLists; set => Set(ref _MailingLists, value); }
+        #endregion
 
-        public MainWindowViewModel(IServerRepository serverRepository,
-                                   ISenderRepository senderRepository,
-                                   IRecipientRepository recipientRepository,
-                                   IMessageRepository messageRepository,
-                                   IMailingListRepository mailingListRepository,
+        #region Конструктор
+        public MainWindowViewModel(IRepository<Server> serverRepository,
+                                   IRepository<Sender> senderRepository,
+                                   IRepository<Recipient> recipientRepository,
+                                   IRepository<Message> messageRepository,
+                                   IRepository<MailingList> mailingListRepository,
                                    IMailSenderService mailSenderService)
         {
             this.serverRepository = serverRepository ?? throw new ArgumentNullException(nameof(serverRepository));
@@ -53,6 +47,25 @@ namespace MailMan.ViewModels
             _MailingLists = new(mailingListRepository.GetAll());
         }
 
+        #endregion
+
+        #region Свойства VM
+
+        private ObservableCollection<Server> _Servers;
+        public ObservableCollection<Server> Servers { get => _Servers; set => Set(ref _Servers, value); }
+        
+        private ObservableCollection<Sender> _Senders;
+        public ObservableCollection<Sender> Senders { get => _Senders; set => Set(ref _Senders, value); }
+        
+        private ObservableCollection<Recipient> _Recipients;
+        public ObservableCollection<Recipient> Recipients { get => _Recipients; set => Set(ref _Recipients, value); }
+        
+        private ObservableCollection<Message> _Messages;
+        public ObservableCollection<Message> Messages { get => _Messages; set => Set(ref _Messages, value); }
+        
+        private ObservableCollection<MailingList> _MailingLists;
+        public ObservableCollection<MailingList> MailingLists { get => _MailingLists; set => Set(ref _MailingLists, value); }
+
         private Server _ServerListSelected;
         public Server ServerListSelected { get => _ServerListSelected; set => Set(ref _ServerListSelected, value); }
         
@@ -67,6 +80,7 @@ namespace MailMan.ViewModels
         
         private MailingList _MailingListSelected;
         public MailingList MailingListSelected { get => _MailingListSelected; set => Set(ref _MailingListSelected, value); }
+        #endregion
 
         #region Команды тулбокса
         #region AddSenderCommand
@@ -203,12 +217,13 @@ namespace MailMan.ViewModels
 
         #endregion
 
+        #region Шаблонные команды CRUD
 
-        private void AddCommand<T>(Collection<T> collection, IRepository<T> repo, Func<string, T, bool> dialog, string title, ref T select) where T : BaseModel, new()
+        private void AddCommand<T>(Collection<T> collection, IRepository<T> repo, Func<string, T, bool> dialog, string title, ref T select) where T : Entity, new()
         {
             T entity = new();
             if (dialog(title, entity) is false) return;
-            entity = repo.Create(entity);
+            entity = repo.Add(entity);
             collection.Add(entity);
             select = entity;
         }
@@ -218,7 +233,7 @@ namespace MailMan.ViewModels
                                     IRepository<T> repo,
                                     Func<string, T, bool> dialog,
                                     string title,
-                                    ref T selected) where T : BaseModel
+                                    ref T selected) where T : Entity
         {
             if (obj is not T entity) return;
             int listIdx = collection.IndexOf(entity);
@@ -228,7 +243,7 @@ namespace MailMan.ViewModels
             selected = entity;
         }
 
-        private void RemoveCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, ref T selected) where T : BaseModel
+        private void RemoveCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, ref T selected) where T : Entity
         {
             if (obj is not T entity) return;
             int listIdx = collection.IndexOf(entity);
@@ -242,5 +257,6 @@ namespace MailMan.ViewModels
             else if (index >= size) index = size - 1;
             return index;
         }
+        #endregion
     }
 }

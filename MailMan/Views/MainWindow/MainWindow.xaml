@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MailMan"
         
         xmlns:fa="http://schemas.fontawesome.com/icons/"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:ex="http://schemas.xceed.com/wpf/xaml/toolkit"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Title="{Binding Title}" Height="600" Width="800">
     
@@ -245,7 +245,7 @@
                             <Calendar/>
                         </GroupBox>
                         <GroupBox Header="Время запуска">
-                            <xctk:TimeSpanUpDown/>
+                            <ex:DateTimePicker/>
                         </GroupBox>
                         <GroupBox Header="Управление">
                             <StackPanel>

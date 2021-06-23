@@ -2,7 +2,7 @@
 
 namespace MailMan.Models
 {
-    public class Sender : BaseModel
+    public class Sender : Entity
     {
         public string Name { get; set; }
 

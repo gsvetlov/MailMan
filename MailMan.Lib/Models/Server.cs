@@ -2,8 +2,8 @@
 
 namespace MailMan.Models
 {
-    public class Server : BaseModel
-    {
+    public class Server : Entity
+    {        
         public string Name { get; set; }
 
         public string Address { get; set; }

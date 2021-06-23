@@ -2,8 +2,10 @@
 using System.Windows;
 
 using MailMan.Data;
+using MailMan.Models;
 using MailMan.Services.MailSenderService;
-using MailMan.Services.Repositories;
+using MailMan.Services.Repositories.Base;
+using MailMan.Data;
 using MailMan.ViewModels;
 
 using Microsoft.Extensions.Configuration;
@@ -29,11 +31,11 @@ namespace MailMan
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
             services
-                .AddSingleton<IServerRepository, DebugServerRepository>()
-                .AddSingleton<ISenderRepository, DebugSenderRepository>()
-                .AddSingleton<IRecipientRepository, DebugRecipientRepository>()
-                .AddSingleton<IMessageRepository, DebugMessageRepository>()
-                .AddSingleton<IMailingListRepository, DebugMailingListRepository>()
+                .AddSingleton<IRepository<Server>, DebugServerRepository>()
+                .AddSingleton<IRepository<Sender>, DebugSenderRepository>()
+                .AddSingleton<IRepository<Recipient>, DebugRecipientRepository>()
+                .AddSingleton<IRepository<Message>, DebugMessageRepository>()
+                .AddSingleton<IRepository<MailingList>, DebugMailingListRepository>()
                 .AddSingleton<IMailSenderService, DebugMailService>()
                 .AddTransient<MainWindowViewModel>()
                 .AddTransient<NotifyUserDialogViewModel>();
