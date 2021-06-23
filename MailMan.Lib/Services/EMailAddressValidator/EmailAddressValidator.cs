@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace MailMan.Services.EMailAddressValidator
 {
-    public static class EmailAddressValidator
+    public class EmailAddressValidator : IEmailAddressValidator
     {
-        public static bool Check(string email)
+        public bool Check(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
                 return false;
             var mail = email.Trim().Split("@");
-            if (mail.Length > 2 || mail[0].Length > 64 || Regex.IsMatch(@"^[^/s/S]/.*$", mail[1])) return false;
+            if (mail.Length is not 2 || mail[0].Length > 64 || Regex.IsMatch(@"^[^/s/S]/.*$", mail[1])) return false;
              
 
             try

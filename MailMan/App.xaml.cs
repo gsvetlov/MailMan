@@ -3,9 +3,9 @@ using System.Windows;
 
 using MailMan.Data;
 using MailMan.Models;
+using MailMan.Services.EMailAddressValidator;
 using MailMan.Services.MailSenderService;
 using MailMan.Services.Repositories.Base;
-using MailMan.Data;
 using MailMan.ViewModels;
 
 using Microsoft.Extensions.Configuration;
@@ -37,6 +37,7 @@ namespace MailMan
                 .AddSingleton<IRepository<Message>, DebugMessageRepository>()
                 .AddSingleton<IRepository<MailingList>, DebugMailingListRepository>()
                 .AddSingleton<IMailSenderService, DebugMailService>()
+                .AddSingleton<IEmailAddressValidator, EmailAddressValidator>()
                 .AddTransient<MainWindowViewModel>()
                 .AddTransient<NotifyUserDialogViewModel>();
         }

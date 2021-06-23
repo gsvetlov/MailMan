@@ -10,7 +10,9 @@ namespace MailMan.Lib.Tests
         [TestCaseSource(nameof(invalidNames))]
         public void Check_NonValid_ReturnsFalse(string address)
         {
-            bool actual = EmailAddressValidator.Check(address);
+            var validator = new EmailAddressValidator();
+
+            bool actual = validator.Check(address);
 
             Assert.False(actual);
         }
@@ -18,7 +20,9 @@ namespace MailMan.Lib.Tests
         [TestCaseSource(nameof(validNames))]
         public void Check_Valid_ReturnsTrue(string address)
         {
-            bool actual = EmailAddressValidator.Check(address);
+            var validator = new EmailAddressValidator();
+
+            bool actual = validator.Check(address);
 
             Assert.True(actual);
         }
