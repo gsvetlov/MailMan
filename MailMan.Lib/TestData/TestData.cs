@@ -15,7 +15,9 @@ namespace MailMan.Data
                Address = $"smtp.server-{i}.ru",
                Login = $"User-{i}",
                Password = $"Password - {i}",
-               UseSSL = i % 2 == 0
+               UseSSL = i % 2 == 0,
+               Description = $"Описание сервера {i}"
+
            })
            .ToList();
 

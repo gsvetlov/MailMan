@@ -4,6 +4,7 @@ using System.Windows.Input;
 
 using MailMan.Models;
 using MailMan.Models.Base;
+using MailMan.Services.EntityEditorService;
 using MailMan.Services.MailSenderService;
 using MailMan.Services.Repositories;
 using MailMan.Services.Repositories.Base;
@@ -23,6 +24,8 @@ namespace MailMan.ViewModels
         private IRepository<MailingList> mailingListRepository;
         private IMailSenderService mailSenderService;
 
+        private IEntityEditorService<Server> serverEditor;
+
         #endregion
 
         #region Конструктор
@@ -31,6 +34,7 @@ namespace MailMan.ViewModels
                                    IRepository<Recipient> recipientRepository,
                                    IRepository<Message> messageRepository,
                                    IRepository<MailingList> mailingListRepository,
+                                   IEntityEditorService<Server> serverEditorService,
                                    IMailSenderService mailSenderService)
         {
             this.serverRepository = serverRepository ?? throw new ArgumentNullException(nameof(serverRepository));
@@ -39,6 +43,7 @@ namespace MailMan.ViewModels
             this.messageRepository = messageRepository ?? throw new ArgumentNullException(nameof(messageRepository));
             this.mailingListRepository = mailingListRepository ?? throw new ArgumentNullException(nameof(mailingListRepository));
             this.mailSenderService = mailSenderService ?? throw new ArgumentNullException(nameof(mailSenderService));
+            this.serverEditor = serverEditorService ?? throw new ArgumentNullException(nameof(serverEditorService));
             _title = "MailMan: mass-email app";
             _Servers = new(serverRepository.GetAll());
             _Senders = new(senderRepository.GetAll());
@@ -122,7 +127,7 @@ namespace MailMan.ViewModels
         private void OnAddServerCommandExecuted(object obj)
         {
             var select = ServerListSelected;
-            AddCommand(Servers, serverRepository, ServerEditDialog.ShowDialog, "Добавить сервер", ref select);
+            AddCommand(Servers, serverRepository, serverEditor.Edit, "Добавить сервер", ref select);
             ServerListSelected = select;
         }
         #endregion
@@ -133,7 +138,7 @@ namespace MailMan.ViewModels
         private void OnEditServerCommandExecuted(object obj)
         {
             var select = ServerListSelected;
-            EditCommand(obj, Servers, serverRepository, ServerEditDialog.ShowDialog, "Редактировать сервер", ref select);
+            EditCommand(obj, Servers, serverRepository, serverEditor.Edit, "Редактировать сервер", ref select);
             ServerListSelected = select;
         }
         #endregion
@@ -228,16 +233,30 @@ namespace MailMan.ViewModels
             select = entity;
         }
 
-        private void EditCommand<T>(object obj,
-                                    Collection<T> collection,
-                                    IRepository<T> repo,
-                                    Func<string, T, bool> dialog,
-                                    string title,
-                                    ref T selected) where T : Entity
+        private void EditCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, Func<string, T, bool> dialog, string title, ref T selected) where T : Entity
         {
             if (obj is not T entity) return;
             int listIdx = collection.IndexOf(entity);
             if (listIdx == -1 || dialog(title, entity) is false || repo.Update(entity, s => s.Id == entity.Id) is false) return;
+            collection.RemoveAt(listIdx);
+            collection.Insert(listIdx, entity);
+            selected = entity;
+        }
+
+        private void AddCommand<T>(Collection<T> collection, IRepository<T> repo, Func< T, bool> dialog, string title, ref T select) where T : Entity, new()
+        {
+            T entity = new();
+            if (dialog(entity) is false) return;
+            entity = repo.Add(entity);
+            collection.Add(entity);
+            select = entity;
+        }
+
+        private void EditCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, Func<T, bool> dialog, string title, ref T selected) where T : Entity
+        {
+            if (obj is not T entity) return;
+            int listIdx = collection.IndexOf(entity);
+            if (listIdx == -1 || dialog(entity) is false || repo.Update(entity, s => s.Id == entity.Id) is false) return;
             collection.RemoveAt(listIdx);
             collection.Insert(listIdx, entity);
             selected = entity;

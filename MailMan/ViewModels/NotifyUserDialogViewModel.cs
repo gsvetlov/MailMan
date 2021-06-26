@@ -22,5 +22,6 @@ namespace MailMan.ViewModels
 
         private ICommand _CloseWindowCommand;
         public ICommand CloseWindowCommand => _CloseWindowCommand ??= new CloseWindowCommand();
+        
     }
 }
