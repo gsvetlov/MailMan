@@ -1,50 +1,45 @@
 ﻿using System;
-using System.Numerics;
-using System.Threading;
+using System.Diagnostics;
+using System.Linq;
 
 namespace ThreadPoolSample
 {
     class Program
     {
+        private static Random random = new();
         static void Main(string[] args)
         {
-            NumbersFun numbers = new();
-            Console.WriteLine("Введите целое положительное число");            
-            while (true)
-            {
-                var input = Console.ReadLine();
-                bool cancel = string.IsNullOrWhiteSpace(input);
-                if (cancel) break;
-                int.TryParse(input, out int value);
-                ThreadPool.QueueUserWorkItem(numbers.GetFactorial, value);
-                ThreadPool.QueueUserWorkItem(numbers.GetSum, value);
-            }
-            Console.WriteLine();
+            var m1 = Matrix.GetRandomMatrix(100, 100, 0, 10, random.Next);
+            var m2 = Matrix.GetRandomMatrix(100, 100, 0, 10, random.Next);
+
+            Stopwatch sw = new();
+            Console.WriteLine("простой цикл");
+            sw.Start();
+            var result = m1.Mul(m2);
+            Console.WriteLine(sw.Elapsed);
+            Console.WriteLine($"сумма элементов для проверки: {result.Sum()}");
+
+            Console.WriteLine("параллельный цикл");
+            sw.Restart();
+            result = m1.MulParallel(m2);
+            Console.WriteLine(sw.Elapsed);
+            Console.WriteLine($"сумма элементов для проверки: {result.Sum()}");
+
+            Console.WriteLine("range в параллельном цикле");
+            sw.Restart();
+            result = m1.MulParallelWithRange(m2);
+            Console.WriteLine(sw.Elapsed);
+            Console.WriteLine($"сумма элементов для проверки: {result.Sum()}");
+
+            Console.WriteLine("zip в параллельном цикле");
+            sw.Restart();
+            result = m1.MulParallelWithZip(m2);
+            Console.WriteLine(sw.Elapsed);
+            Console.WriteLine($"сумма элементов для проверки: {result.Sum()}");
+
+
+            Console.ReadLine();
+
         }
-
-
-    }
-
-    class NumbersFun
-    {
-        public void GetFactorial(object obj)
-        {
-            int number = (int)obj;
-            if (number < 0) throw new ArgumentOutOfRangeException(nameof(number), "Отрицательные числа недопустимы");
-            BigInteger result = 1;
-            if (number > 1)
-                for (int i = 1; i <= number; i++)
-                    result *= i;
-            Console.WriteLine($"{number}! = {result}");
-        }
-
-        public void GetSum(object obj)
-        {
-            int number = (int)obj;
-            if (number < 0) throw new ArgumentOutOfRangeException(nameof(number), "Отрицательные числа недопустимы");
-            long result = number * (number + 1) / 2;
-            Console.WriteLine($"Сумма чисел от 1 до {number} равна {result}");
-        }
-
     }
 }
