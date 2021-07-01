@@ -45,7 +45,7 @@
                     <TextBox Text="{Binding OutputDirectory}" Grid.Column="1" Grid.Row="2" Margin="3"/>
                 </Grid>
             </GroupBox>
-            <TextBox Text="{Binding MessageText}" IsReadOnly="True" IsReadOnlyCaretVisible="False" Height="80" Margin="3"/>
+            <TextBox Text="{Binding MessageText}" IsReadOnly="True" IsReadOnlyCaretVisible="False" MinHeight="80" Margin="3"/>
         </StackPanel>
 
     </DockPanel>

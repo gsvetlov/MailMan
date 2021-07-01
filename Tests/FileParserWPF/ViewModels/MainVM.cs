@@ -54,14 +54,9 @@ namespace FileParserWPF.ViewModels
             GenerateDataExecuting = true;
             generateDataCommandCts = new CancellationTokenSource();
             sw.Restart();
-            try
-            {
-                await Task.Run(() => DataGenerator.GenerateData(InputDirectory, Samples, generateDataCommandCts.Token));
-            }
-            catch (OperationCanceledException e)
-            {
-                MessageText = messageSb.Clear().Append(MessageText).Append(Environment.NewLine).Append(e.Message).ToString();
-            }
+
+            await Task.Run(() => DataGenerator.GenerateData(InputDirectory, Samples, generateDataCommandCts.Token));
+
             sw.Stop();
 
             generateDataCommandCts.Dispose();
@@ -103,9 +98,9 @@ namespace FileParserWPF.ViewModels
                 await Task.Run(() => reader.ReadAsync(InputDirectory, processDataCommandCts.Token));
                 await Task.Run(() => writer.Close());
             }
-            catch (OperationCanceledException e)
+            catch (AggregateException e)
             {
-                MessageText = messageSb.Clear().Append(MessageText).Append(Environment.NewLine).Append(e.Message).ToString();
+                MessageText = messageSb.Clear().Append(MessageText).Append(Environment.NewLine).Append(e.InnerException.Message).ToString();
             }
             sw.Stop();
 

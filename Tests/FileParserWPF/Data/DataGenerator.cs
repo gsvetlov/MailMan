@@ -17,18 +17,22 @@ namespace FileParserWPF.Data
         public static async Task GenerateData(string path, int count, CancellationToken token = default)
         {
             CreateDirectoryIfNotExist(path);
-            var tasks = Enumerable.Range(1, count).Select(i =>
+            try
             {
-                token.ThrowIfCancellationRequested();
+                var tasks = Enumerable.Range(1, count).Select(i =>
+                {
+                    token.ThrowIfCancellationRequested();
 
-                sbPath.Clear().Append(path).Append($"\\datachunk-{i}.txt");
-                var chunk = NextChunk();
-                sbData.Clear().AppendJoin(" ", (int)chunk.type, chunk.first, chunk.second);
+                    sbPath.Clear().Append(path).Append($"\\datachunk-{i}.txt");
+                    var chunk = NextChunk();
+                    sbData.Clear().AppendJoin(" ", (int)chunk.type, chunk.first, chunk.second);
 
-                Task task = File.WriteAllTextAsync(sbPath.ToString(), sbData.ToString(), Encoding.UTF8, token);
-                return task;
-            }).ToArray();
-            await Task.WhenAll(tasks);
+                    Task task = File.WriteAllTextAsync(sbPath.ToString(), sbData.ToString(), Encoding.UTF8, token);
+                    return task;
+                }).ToArray();
+                await Task.WhenAll(tasks);
+            }
+            catch (OperationCanceledException) { }
         }
 
         private static DataChunk NextChunk() => new((OperationType)(random.Next(2) + 1),
