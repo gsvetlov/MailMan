@@ -12,11 +12,6 @@ namespace FileParserWPF.Model
         {
             this.processor = processor;
         }
-        public void Enque(string str)
-        {
-            Filter(str);
-        }
-
         public void Filter(string str)
         {
             var parts = str.Split(" ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);

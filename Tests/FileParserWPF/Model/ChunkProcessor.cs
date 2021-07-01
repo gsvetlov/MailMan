@@ -12,12 +12,7 @@ namespace FileParserWPF.Model
             this.writer = writer;
         }
 
-        public void Enqueue(DataChunk chunk)
-        {
-            Process(chunk);
-        }
-
-        private void Process(DataChunk chunk)
+        public void Process(DataChunk chunk)
         {
             var result = chunk.type switch
             {

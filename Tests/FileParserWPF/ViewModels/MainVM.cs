@@ -25,8 +25,8 @@ namespace FileParserWPF.ViewModels
         {
             writer = new ChunkWriter();
             processor = new ChunkProcessor(writer.Write);
-            filter = new ChunkedFilter(processor.Enqueue);
-            reader = new ChunkedDataReader(filter.Enque);
+            filter = new ChunkedFilter(processor.Process);
+            reader = new ChunkedDataReader(filter.Filter);
         }
 
         private string _InputDirectory = @".\input";
