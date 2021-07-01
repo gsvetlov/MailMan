@@ -1,0 +1,52 @@
+﻿<Window x:Class="FileParserWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FileParserWPF"
+        xmlns:vm="clr-namespace:FileParserWPF.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="500">
+    <Window.DataContext>
+        <vm:MainVM/>
+    </Window.DataContext>
+    <DockPanel>
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Left">
+            <GroupBox Header="Generate Initial Data" Margin="5">
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <Button Content="Generate" Command="{Binding GenerateData}" Margin="3"/>
+                    <Button Content="Cancel" IsCancel="True" Command="{Binding CancelGenerateData}" Margin="3"/>
+                </StackPanel>                
+            </GroupBox>
+            <GroupBox Header="Process Data" Margin="5">
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <Button Content="Process" Command="{Binding ProcessData}" Margin="3"/>
+                    <Button Content="Cancel" IsCancel="True" Command="{Binding CancelProcessData}" Margin="3"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <GroupBox Header="Settings" Margin="3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="20*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Samples Quantity" Grid.Column="0" Grid.Row="0" Margin="3"/>
+                    <TextBox Text="{Binding Samples}" Grid.Column="1" Grid.Row="0" Margin="3"/>
+                    <TextBlock Text="Input Directory" Grid.Column="0" Grid.Row="1" Margin="3"/>
+                    <TextBox Text="{Binding InputDirectory}" Grid.Column="1" Grid.Row="1" Margin="3"/>
+                    <TextBlock Text="Output File" Grid.Column="0" Grid.Row="2" Margin="3"/>
+                    <TextBox Text="{Binding OutputDirectory}" Grid.Column="1" Grid.Row="2" Margin="3"/>
+                </Grid>
+            </GroupBox>
+            <TextBox Text="{Binding MessageText}" IsReadOnly="True" IsReadOnlyCaretVisible="False" MinHeight="80" Margin="3"/>
+        </StackPanel>
+
+    </DockPanel>
+</Window>
