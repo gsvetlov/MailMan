@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace FileParserWPF.Model
@@ -18,7 +16,7 @@ namespace FileParserWPF.Model
         public void Enqueue(DataChunk chunk)
         {
             inbound.Enqueue(chunk);
-            Task.Run(Process);
+            Task.Run(Process).ConfigureAwait(false);
         }
 
         private Task Process()
@@ -27,7 +25,6 @@ namespace FileParserWPF.Model
             {
                 if (inbound.TryDequeue(out DataChunk chunk))
                 {
-                    Debug.WriteLine($"processor: dequeued in {Thread.CurrentThread.ManagedThreadId}");
                     var result = chunk.type switch
                     {
                         OperationType.Divide => chunk.second switch
@@ -42,7 +39,6 @@ namespace FileParserWPF.Model
                         writer.Invoke(result);
                 }
             }
-            Debug.WriteLine($"processor shutting down in {Thread.CurrentThread.ManagedThreadId}");
             return Task.CompletedTask;
         }
     }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using System.Threading;
-using System.Diagnostics;
 
 namespace FileParserWPF.Model
 {
@@ -18,7 +16,7 @@ namespace FileParserWPF.Model
         public void Enque(string str)
         {
             inbound.Enqueue(str);
-            Task.Run(Filter);
+            Task.Run(Filter).ConfigureAwait(false);
         }
 
         public Task Filter()
@@ -27,14 +25,12 @@ namespace FileParserWPF.Model
             {
                 if (inbound.TryDequeue(out string str))
                 {
-                    Debug.WriteLine($"filter: dequeued in {Thread.CurrentThread.ManagedThreadId}");
                     var parts = str.Split(" ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
                     var chunk = ChunkDecode(parts);
                     if (chunk.valid)
                         processor.Invoke(new DataChunk(chunk.type, chunk.first, chunk.second));
                 }
             }
-            Debug.WriteLine($"filter shutting down in {Thread.CurrentThread.ManagedThreadId}");
             return Task.CompletedTask;
         }
 

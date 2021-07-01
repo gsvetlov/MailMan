@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FileParserWPF"
         xmlns:vm="clr-namespace:FileParserWPF.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="500">
     <Window.DataContext>
         <vm:MainVM/>
     </Window.DataContext>
@@ -20,12 +20,33 @@
             </GroupBox>
             <GroupBox Header="Process Data" Margin="5">
                 <StackPanel Orientation="Vertical" Margin="5">
-                    <Button Content="{Binding BtContext}" Command="{Binding ProcessData}" Margin="3"/>
+                    <Button Content="Process" Command="{Binding ProcessData}" Margin="3"/>
                     <Button Content="Cancel" IsCancel="True" Command="{Binding CancelProcessData}" Margin="3"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
-        <TextBox/>
+        <StackPanel Orientation="Vertical">
+            <GroupBox Header="Settings" Margin="3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="20*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Samples Quantity" Grid.Column="0" Grid.Row="0" Margin="3"/>
+                    <TextBox Text="{Binding Samples}" Grid.Column="1" Grid.Row="0" Margin="3"/>
+                    <TextBlock Text="Input Directory" Grid.Column="0" Grid.Row="1" Margin="3"/>
+                    <TextBox Text="{Binding InputDirectory}" Grid.Column="1" Grid.Row="1" Margin="3"/>
+                    <TextBlock Text="Output File" Grid.Column="0" Grid.Row="2" Margin="3"/>
+                    <TextBox Text="{Binding OutputDirectory}" Grid.Column="1" Grid.Row="2" Margin="3"/>
+                </Grid>
+            </GroupBox>
+            <TextBox Text="{Binding MessageText}" IsReadOnly="True" IsReadOnlyCaretVisible="False" Height="80" Margin="3"/>
+        </StackPanel>
 
     </DockPanel>
 </Window>

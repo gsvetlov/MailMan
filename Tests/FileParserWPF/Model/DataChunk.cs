@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileParserWPF.Model
+﻿namespace FileParserWPF.Model
 {
-    internal record DataChunk(OperationType type, double first, double second)
-    {
-        
-    }
+    internal record DataChunk(OperationType type, double first, double second) { }
 
     internal enum OperationType
     {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,11 +12,11 @@ namespace FileParserWPF.Model
         private BlockingCollection<double> inbound = new();
         private string filename;
         private CancellationTokenSource cts = new();
-
+        public string Filename { get => filename; set => filename = value; }
         public ChunkWriter(string filename = null)
         {
             this.filename = filename ?? DEFAULT_FILENAME;
-            Task.Run(ConsumeInbound);
+            Task.Run(ConsumeInbound).ConfigureAwait(false);
         }
 
         public void Close() => cts.Cancel();
@@ -37,7 +36,6 @@ namespace FileParserWPF.Model
 
                     var value = inbound.Take(cts.Token);
                     writer.Write(value);
-                    Debug.WriteLine("data written");
                 }
                 catch (OperationCanceledException)
                 {
@@ -45,7 +43,6 @@ namespace FileParserWPF.Model
                     fs.Flush();
                 }
             }
-            Debug.WriteLine("Writer shutting down gracefully.");
             return Task.CompletedTask;
         }
     }
