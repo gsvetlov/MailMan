@@ -6,7 +6,6 @@ namespace FileParserWPF.Model
 {
     internal class ChunkProcessor
     {
-        private ConcurrentQueue<DataChunk> inbound = new();
         private Action<double> writer;
         public ChunkProcessor(Action<double> writer)
         {
@@ -15,31 +14,23 @@ namespace FileParserWPF.Model
 
         public void Enqueue(DataChunk chunk)
         {
-            inbound.Enqueue(chunk);
-            Task.Run(Process).ConfigureAwait(false);
+            Process(chunk);
         }
 
-        private Task Process()
+        private void Process(DataChunk chunk)
         {
-            while (!inbound.IsEmpty)
+            var result = chunk.type switch
             {
-                if (inbound.TryDequeue(out DataChunk chunk))
+                OperationType.Divide => chunk.second switch
                 {
-                    var result = chunk.type switch
-                    {
-                        OperationType.Divide => chunk.second switch
-                        {
-                            0d => double.NaN,
-                            _ => chunk.first / chunk.second,
-                        },
-                        OperationType.Multiply => chunk.first * chunk.second,
-                        _ => double.NaN
-                    };
-                    if (!double.IsNaN(result))
-                        writer.Invoke(result);
-                }
-            }
-            return Task.CompletedTask;
+                    0d => double.NaN,
+                    _ => chunk.first / chunk.second,
+                },
+                OperationType.Multiply => chunk.first * chunk.second,
+                _ => double.NaN
+            };
+            if (!double.IsNaN(result))
+                writer.Invoke(result);
         }
     }
 }

@@ -7,7 +7,6 @@ namespace FileParserWPF.Model
     internal class ChunkedFilter
     {
         private Action<DataChunk> processor;
-        private ConcurrentQueue<string> inbound = new();
 
         public ChunkedFilter(Action<DataChunk> processor)
         {
@@ -15,23 +14,15 @@ namespace FileParserWPF.Model
         }
         public void Enque(string str)
         {
-            inbound.Enqueue(str);
-            Task.Run(Filter).ConfigureAwait(false);
+            Filter(str);
         }
 
-        public Task Filter()
+        public void Filter(string str)
         {
-            while (!inbound.IsEmpty)
-            {
-                if (inbound.TryDequeue(out string str))
-                {
-                    var parts = str.Split(" ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-                    var chunk = ChunkDecode(parts);
-                    if (chunk.valid)
-                        processor.Invoke(new DataChunk(chunk.type, chunk.first, chunk.second));
-                }
-            }
-            return Task.CompletedTask;
+            var parts = str.Split(" ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            var chunk = ChunkDecode(parts);
+            if (chunk.valid)
+                processor.Invoke(new DataChunk(chunk.type, chunk.first, chunk.second));
         }
 
         private (bool valid, OperationType type, double first, double second) ChunkDecode(string[] parts)
