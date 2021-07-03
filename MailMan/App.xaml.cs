@@ -2,9 +2,14 @@
 using System.Windows;
 
 using MailMan.Data;
+using MailMan.Models;
+using MailMan.Services;
+using MailMan.Services.EMailAddressValidator;
+using MailMan.Services.EntityEditorService;
 using MailMan.Services.MailSenderService;
-using MailMan.Services.Repositories;
+using MailMan.Services.Repositories.Base;
 using MailMan.ViewModels;
+using MailMan.ViewModels.UserDialog;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,14 +34,17 @@ namespace MailMan
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
             services
-                .AddSingleton<IServerRepository, DebugServerRepository>()
-                .AddSingleton<ISenderRepository, DebugSenderRepository>()
-                .AddSingleton<IRecipientRepository, DebugRecipientRepository>()
-                .AddSingleton<IMessageRepository, DebugMessageRepository>()
-                .AddSingleton<IMailingListRepository, DebugMailingListRepository>()
+                .AddSingleton<IRepository<Server>, DebugServerRepository>()
+                .AddSingleton<IRepository<Sender>, DebugSenderRepository>()
+                .AddSingleton<IRepository<Recipient>, DebugRecipientRepository>()
+                .AddSingleton<IRepository<Message>, DebugMessageRepository>()
+                .AddSingleton<IRepository<MailingList>, DebugMailingListRepository>()
                 .AddSingleton<IMailSenderService, DebugMailService>()
+                .AddSingleton<IEmailAddressValidator, EmailAddressValidator>()
+                .AddSingleton<IEntityEditorService<Server>, ServerEditorService>()
                 .AddTransient<MainWindowViewModel>()
-                .AddTransient<NotifyUserDialogViewModel>();
+                .AddTransient<NotifyUserDialogViewModel>()
+                .AddTransient<EditServerDialogVM>();
         }
 
         protected override void OnStartup(StartupEventArgs e)

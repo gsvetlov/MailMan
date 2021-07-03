@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailMan.TestConsole", "Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailMan.TestWPF", "Tests\MailMan.TestWPF\MailMan.TestWPF.csproj", "{50E04286-3630-4931-BF91-164BFD49B068}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailMan.Lib", "MailMan.Lib\MailMan.Lib.csproj", "{CEABD1C6-DF93-4C0E-96D5-029BA7591D43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailMan.Lib", "MailMan.Lib\MailMan.Lib.csproj", "{CEABD1C6-DF93-4C0E-96D5-029BA7591D43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailMan.Lib.Tests", "Tests\MailMan.Lib.Tests\MailMan.Lib.Tests.csproj", "{C5C199C9-C16F-41CD-9647-69FB3ECF96E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailMan.Lib.Tests", "Tests\MailMan.Lib.Tests\MailMan.Lib.Tests.csproj", "{52B81CBF-03FE-4263-B12C-8BE5B9A2700F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,10 @@ Global
 		{CEABD1C6-DF93-4C0E-96D5-029BA7591D43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEABD1C6-DF93-4C0E-96D5-029BA7591D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEABD1C6-DF93-4C0E-96D5-029BA7591D43}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C5C199C9-C16F-41CD-9647-69FB3ECF96E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5C199C9-C16F-41CD-9647-69FB3ECF96E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5C199C9-C16F-41CD-9647-69FB3ECF96E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5C199C9-C16F-41CD-9647-69FB3ECF96E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52B81CBF-03FE-4263-B12C-8BE5B9A2700F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52B81CBF-03FE-4263-B12C-8BE5B9A2700F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52B81CBF-03FE-4263-B12C-8BE5B9A2700F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52B81CBF-03FE-4263-B12C-8BE5B9A2700F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,7 +48,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9167ADF5-7B89-43A4-9E9F-BF7CA899483A} = {9BCD61DE-CD9F-49C0-900E-E4DF5C4083BA}
 		{50E04286-3630-4931-BF91-164BFD49B068} = {9BCD61DE-CD9F-49C0-900E-E4DF5C4083BA}
-		{C5C199C9-C16F-41CD-9647-69FB3ECF96E6} = {9BCD61DE-CD9F-49C0-900E-E4DF5C4083BA}
+		{52B81CBF-03FE-4263-B12C-8BE5B9A2700F} = {9BCD61DE-CD9F-49C0-900E-E4DF5C4083BA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {39529844-AF13-4C53-BE6B-A315F6D243C4}

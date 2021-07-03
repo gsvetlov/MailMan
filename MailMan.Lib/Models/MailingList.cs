@@ -8,7 +8,7 @@ using MailMan.Models.Base;
 
 namespace MailMan.Models
 {
-    public class MailingList : BaseModel
+    public class MailingList : Entity
     {
         public string Name { get; set; }
         public List<Sender> Senders { get; set; }

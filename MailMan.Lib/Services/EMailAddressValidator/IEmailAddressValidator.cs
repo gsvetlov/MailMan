@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MailMan.Models.Base
+namespace MailMan.Services.EMailAddressValidator
 {
-    public abstract class BaseModel
+    public interface IEmailAddressValidator
     {
-        public int Id { get; set; }
+        bool Check(string address);
     }
 }

@@ -4,14 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailMan.Views.UserDialog"
+        xmlns:validation="clr-namespace:MailMan.Infrastructure.ValidationRules"
         mc:Ignorable="d"
-        Title="RecipientEditDialog" Height="300" Width="300">
+        Title="RecipientEditDialog" Height="300" Width="300" DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}">
     <StackPanel Orientation="Vertical">
         <GroupBox Header="Имя">
             <TextBox Name="tbName" Text="Имя"/>
         </GroupBox>
         <GroupBox Header="Адрес">
-            <TextBox Name="tbAddress" Text="Адрес"/>
+            <TextBox Name="tbAddress">
+                <TextBox.Text>
+                    <Binding Path="RecipientListSelected.Address" NotifyOnValidationError="True" NotifyOnSourceUpdated="True" NotifyOnTargetUpdated="True" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validation:EmailAddressValidationRule/>
+                        </Binding.ValidationRules>
+                        
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
         </GroupBox>
         <GroupBox Header="Описание" Height="80">
             <TextBox Name="tbDescription" Text="Описание" AcceptsReturn="True" AcceptsTab="True"/>
