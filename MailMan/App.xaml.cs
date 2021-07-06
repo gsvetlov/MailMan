@@ -28,27 +28,27 @@ namespace MailMan
 
         public static IHostBuilder CreateHostBuilder(string[] args) => Host
             .CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration(opt => opt.AddUserSecrets<App>())
+            .ConfigureAppConfiguration(opt => opt.AddUserSecrets<App>().AddJsonFile("appsettings.json"))
             .ConfigureLogging(opt => opt.AddDebug())
             .ConfigureServices(ConfigureServices);
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
             services
-                .AddSingleton<IRepository<Server>, DebugServerRepository>()
-                .AddSingleton<IRepository<Sender>, DebugSenderRepository>()
-                .AddSingleton<IRepository<Recipient>, DebugRecipientRepository>()
-                .AddSingleton<IRepository<Message>, DebugMessageRepository>()
-                .AddSingleton<IRepository<MailingList>, DebugMailingListRepository>()
-                .AddSingleton<IMailSenderService, DebugMailService>()
-                .AddSingleton<IEmailAddressValidator, EmailAddressValidator>()
-                .AddSingleton<IEntityEditorService<Server>, ServerEditorService>()
-                .AddTransient<MainWindowViewModel>()
-                .AddTransient<NotifyUserDialogViewModel>()
-                .AddTransient<EditServerDialogVM>();
+                .AddScoped<IRepository<Server>, DebugServerRepository>()
+                .AddScoped<IRepository<Sender>, DebugSenderRepository>()
+                .AddScoped<IRepository<Recipient>, DebugRecipientRepository>()
+                .AddScoped<IRepository<Message>, DebugMessageRepository>()
+                .AddScoped<IRepository<MailingList>, DebugMailingListRepository>()
+                .AddScoped<IMailSenderService, DebugMailService>()
+                .AddScoped<IEmailAddressValidator, EmailAddressValidator>()
+                .AddScoped<IEntityEditorService<Server>, ServerEditorService>()
+                .AddScoped<MainWindowViewModel>()
+                .AddScoped<NotifyUserDialogViewModel>()
+                .AddScoped<EditServerDialogVM>();
         }
 
         protected override void OnStartup(StartupEventArgs e)
-        {
+        {   
             AppHost.Start();
             base.OnStartup(e);
         }
