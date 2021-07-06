@@ -2,6 +2,7 @@
 using System.Windows;
 
 using MailMan.Data;
+using MailMan.Infrastructure.DB;
 using MailMan.Models;
 using MailMan.Services;
 using MailMan.Services.EMailAddressValidator;
@@ -11,6 +12,7 @@ using MailMan.Services.Repositories.Base;
 using MailMan.ViewModels;
 using MailMan.ViewModels.UserDialog;
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,12 +30,13 @@ namespace MailMan
 
         public static IHostBuilder CreateHostBuilder(string[] args) => Host
             .CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration(opt => opt.AddUserSecrets<App>().AddJsonFile("appsettings.json"))
+            .ConfigureAppConfiguration(opt => opt.AddUserSecrets<App>())
             .ConfigureLogging(opt => opt.AddDebug())
             .ConfigureServices(ConfigureServices);
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
             services
+                .AddDbContext<MailManDB>(opt => opt.UseSqlServer(host.Configuration.GetConnectionString("dbConnection")))
                 .AddScoped<IRepository<Server>, DebugServerRepository>()
                 .AddScoped<IRepository<Sender>, DebugSenderRepository>()
                 .AddScoped<IRepository<Recipient>, DebugRecipientRepository>()

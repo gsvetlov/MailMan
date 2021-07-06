@@ -11,9 +11,9 @@ namespace MailMan.Models
     public class MailingList : Entity
     {
         public string Name { get; set; }
-        public List<Sender> Senders { get; set; }
-        public List<Server> Servers { get; set; }
-        public List<Recipient> Recipients { get; set; }
+        public ICollection<Sender> Senders { get; set; }
+        public ICollection<Server> Servers { get; set; }
+        public ICollection<Recipient> Recipients { get; set; }
         public Message Message { get; set; }
     }
 }
