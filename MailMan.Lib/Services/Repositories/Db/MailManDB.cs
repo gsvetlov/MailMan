@@ -8,9 +8,9 @@ using MailMan.Models;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace MailMan.Infrastructure.DB
+namespace MailMan.Services.Repositories.Db
 {
-    class MailManDB : DbContext
+    public class MailManDB : DbContext
     {
         public DbSet<Server> Servers { get; set; }
         public DbSet<Sender> Senders { get; set; }

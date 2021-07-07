@@ -237,7 +237,7 @@ namespace MailMan.ViewModels
         {
             if (obj is not T entity) return;
             int listIdx = collection.IndexOf(entity);
-            if (listIdx == -1 || dialog(title, entity) is false || repo.Update(entity, s => s.Id == entity.Id) is false) return;
+            if (listIdx == -1 || dialog(title, entity) is false || repo.Update(entity) is false) return;
             collection.RemoveAt(listIdx);
             collection.Insert(listIdx, entity);
             selected = entity;
@@ -256,7 +256,7 @@ namespace MailMan.ViewModels
         {
             if (obj is not T entity) return;
             int listIdx = collection.IndexOf(entity);
-            if (listIdx == -1 || dialog(entity) is false || repo.Update(entity, s => s.Id == entity.Id) is false) return;
+            if (listIdx == -1 || dialog(entity) is false || repo.Update(entity) is false) return;
             collection.RemoveAt(listIdx);
             collection.Insert(listIdx, entity);
             selected = entity;

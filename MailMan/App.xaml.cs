@@ -2,13 +2,13 @@
 using System.Windows;
 
 using MailMan.Data;
-using MailMan.Infrastructure.DB;
 using MailMan.Models;
 using MailMan.Services;
 using MailMan.Services.EMailAddressValidator;
 using MailMan.Services.EntityEditorService;
 using MailMan.Services.MailSenderService;
 using MailMan.Services.Repositories.Base;
+using MailMan.Services.Repositories.Db;
 using MailMan.ViewModels;
 using MailMan.ViewModels.UserDialog;
 

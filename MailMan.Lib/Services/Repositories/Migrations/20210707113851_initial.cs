@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MailMan.Migrations
+namespace MailMan.Services.Repositories.Migrations
 {
     public partial class initial : Migration
     {
