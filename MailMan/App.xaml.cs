@@ -7,6 +7,7 @@ using MailMan.Services;
 using MailMan.Services.EMailAddressValidator;
 using MailMan.Services.EntityEditorService;
 using MailMan.Services.MailSenderService;
+using MailMan.Services.Repositories;
 using MailMan.Services.Repositories.Base;
 using MailMan.Services.Repositories.Db;
 using MailMan.ViewModels;
@@ -37,11 +38,11 @@ namespace MailMan
         {
             services
                 .AddDbContext<MailManDB>(opt => opt.UseSqlServer(host.Configuration.GetConnectionString("dbConnection")))
-                .AddScoped<IRepository<Server>, DebugServerRepository>()
-                .AddScoped<IRepository<Sender>, DebugSenderRepository>()
-                .AddScoped<IRepository<Recipient>, DebugRecipientRepository>()
-                .AddScoped<IRepository<Message>, DebugMessageRepository>()
-                .AddScoped<IRepository<MailingList>, DebugMailingListRepository>()
+                .AddScoped<IRepositoryAsync<Server>, ServerRepository>()
+                .AddScoped<IRepositoryAsync<Sender>, SenderRepository>()
+                .AddScoped<IRepositoryAsync<Recipient>, RecipientRepository>()
+                .AddScoped<IRepositoryAsync<Message>, MessageRepository>()
+                .AddScoped<IRepositoryAsync<MailingList>, MailingListRepository>()
                 .AddScoped<IMailSenderService, DebugMailService>()
                 .AddScoped<IEmailAddressValidator, EmailAddressValidator>()
                 .AddScoped<IEntityEditorService<Server>, ServerEditorService>()

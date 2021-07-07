@@ -6,7 +6,6 @@ using MailMan.Models;
 using MailMan.Models.Base;
 using MailMan.Services.EntityEditorService;
 using MailMan.Services.MailSenderService;
-using MailMan.Services.Repositories;
 using MailMan.Services.Repositories.Base;
 using MailMan.ViewModels.Base;
 using MailMan.Views.UserDialog;
@@ -17,23 +16,23 @@ namespace MailMan.ViewModels
     {
         #region Репозитории
 
-        private IRepository<Server> serverRepository;
-        private IRepository<Sender> senderRepository;
-        private IRepository<Recipient> recipientRepository;
-        private IRepository<Message> messageRepository;
-        private IRepository<MailingList> mailingListRepository;
-        private IMailSenderService mailSenderService;
+        private readonly IRepositoryAsync<Server> serverRepository;
+        private readonly IRepositoryAsync<Sender> senderRepository;
+        private readonly IRepositoryAsync<Recipient> recipientRepository;
+        private readonly IRepositoryAsync<Message> messageRepository;
+        private readonly IRepositoryAsync<MailingList> mailingListRepository;
+        private readonly IMailSenderService mailSenderService;
 
-        private IEntityEditorService<Server> serverEditor;
+        private readonly IEntityEditorService<Server> serverEditor;
 
         #endregion
 
         #region Конструктор
-        public MainWindowViewModel(IRepository<Server> serverRepository,
-                                   IRepository<Sender> senderRepository,
-                                   IRepository<Recipient> recipientRepository,
-                                   IRepository<Message> messageRepository,
-                                   IRepository<MailingList> mailingListRepository,
+        public MainWindowViewModel(IRepositoryAsync<Server> serverRepository,
+                                   IRepositoryAsync<Sender> senderRepository,
+                                   IRepositoryAsync<Recipient> recipientRepository,
+                                   IRepositoryAsync<Message> messageRepository,
+                                   IRepositoryAsync<MailingList> mailingListRepository,
                                    IEntityEditorService<Server> serverEditorService,
                                    IMailSenderService mailSenderService)
         {
