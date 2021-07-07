@@ -56,7 +56,7 @@ namespace MailMan.Data
                Id = i,
                Name = $"Список рассылки {i}",
                Message = Messages[i * 3],
-               Senders = new List<Sender>() { Senders[0], Senders[Senders.Count - i] },
+               Senders = new List<Sender>() { Senders[0], Senders[^i] },
                Servers = new List<Server> { Servers[i - 1] },
                Recipients = new List<Recipient> { Recipients[i], Recipients[i * 2 - 1], Recipients[i * 3 - 2] }
            })

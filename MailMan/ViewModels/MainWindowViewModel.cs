@@ -223,7 +223,7 @@ namespace MailMan.ViewModels
 
         #region Шаблонные команды CRUD
 
-        private void AddCommand<T>(Collection<T> collection, IRepository<T> repo, Func<string, T, bool> dialog, string title, ref T select) where T : Entity, new()
+        private static void AddCommand<T>(Collection<T> collection, IRepository<T> repo, Func<string, T, bool> dialog, string title, ref T select) where T : Entity, new()
         {
             T entity = new();
             if (dialog(title, entity) is false) return;
@@ -232,7 +232,7 @@ namespace MailMan.ViewModels
             select = entity;
         }
 
-        private void EditCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, Func<string, T, bool> dialog, string title, ref T selected) where T : Entity
+        private static void EditCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, Func<string, T, bool> dialog, string title, ref T selected) where T : Entity
         {
             if (obj is not T entity) return;
             int listIdx = collection.IndexOf(entity);
@@ -242,7 +242,7 @@ namespace MailMan.ViewModels
             selected = entity;
         }
 
-        private void AddCommand<T>(Collection<T> collection, IRepository<T> repo, Func< T, bool> dialog, string title, ref T select) where T : Entity, new()
+        private static void AddCommand<T>(Collection<T> collection, IRepository<T> repo, Func< T, bool> dialog, string title, ref T select) where T : Entity, new()
         {
             T entity = new();
             if (dialog(entity) is false) return;
@@ -251,7 +251,7 @@ namespace MailMan.ViewModels
             select = entity;
         }
 
-        private void EditCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, Func<T, bool> dialog, string title, ref T selected) where T : Entity
+        private static void EditCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, Func<T, bool> dialog, string title, ref T selected) where T : Entity
         {
             if (obj is not T entity) return;
             int listIdx = collection.IndexOf(entity);
@@ -261,7 +261,7 @@ namespace MailMan.ViewModels
             selected = entity;
         }
 
-        private void RemoveCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, ref T selected) where T : Entity
+        private static void RemoveCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, ref T selected) where T : Entity
         {
             if (obj is not T entity) return;
             int listIdx = collection.IndexOf(entity);

@@ -32,7 +32,7 @@ namespace MailMan.TestWPF
             //var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
             //mainWindow.Show();
         }
-        private void ConfigureServices(IServiceCollection services)
+        private static void ConfigureServices(IServiceCollection services)
         {
             // ...
 

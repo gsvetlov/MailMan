@@ -7,7 +7,7 @@ namespace MailMan.TestWPF
 {
     public partial class MainWindow
     {
-        private static string _bodyText = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean id sodales massa, vitae rhoncus leo. Fusce diam lorem, pulvinar ut ullamcorper non, iaculis sed quam. Mauris sagittis vulputate magna, id eleifend est sagittis in. Ut ultrices leo ut ultrices vestibulum. Nunc scelerisque, orci vitae commodo semper, erat nisi cursus arcu.";
+        private static readonly string _bodyText = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean id sodales massa, vitae rhoncus leo. Fusce diam lorem, pulvinar ut ullamcorper non, iaculis sed quam. Mauris sagittis vulputate magna, id eleifend est sagittis in. Ut ultrices leo ut ultrices vestibulum. Nunc scelerisque, orci vitae commodo semper, erat nisi cursus arcu.";
         public MainWindow()
         {
             InitializeComponent();

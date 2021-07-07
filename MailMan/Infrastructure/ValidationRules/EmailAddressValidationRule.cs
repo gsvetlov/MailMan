@@ -11,7 +11,7 @@ namespace MailMan.Infrastructure.ValidationRules
 {
     public class EmailAddressValidationRule : ValidationRule
     {
-        private static IEmailAddressValidator addressValidator = App.Services.GetRequiredService<IEmailAddressValidator>();
+        private static readonly IEmailAddressValidator addressValidator = App.Services.GetRequiredService<IEmailAddressValidator>();
 
         public override ValidationResult Validate(object value, CultureInfo culture)
         {
