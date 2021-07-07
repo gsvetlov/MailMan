@@ -6,7 +6,6 @@ using MailMan.Models;
 using MailMan.Models.Base;
 using MailMan.Services.EntityEditorService;
 using MailMan.Services.MailSenderService;
-using MailMan.Services.Repositories;
 using MailMan.Services.Repositories.Base;
 using MailMan.ViewModels.Base;
 using MailMan.Views.UserDialog;
@@ -17,23 +16,23 @@ namespace MailMan.ViewModels
     {
         #region Репозитории
 
-        private IRepository<Server> serverRepository;
-        private IRepository<Sender> senderRepository;
-        private IRepository<Recipient> recipientRepository;
-        private IRepository<Message> messageRepository;
-        private IRepository<MailingList> mailingListRepository;
-        private IMailSenderService mailSenderService;
+        private readonly IRepositoryAsync<Server> serverRepository;
+        private readonly IRepositoryAsync<Sender> senderRepository;
+        private readonly IRepositoryAsync<Recipient> recipientRepository;
+        private readonly IRepositoryAsync<Message> messageRepository;
+        private readonly IRepositoryAsync<MailingList> mailingListRepository;
+        private readonly IMailSenderService mailSenderService;
 
-        private IEntityEditorService<Server> serverEditor;
+        private readonly IEntityEditorService<Server> serverEditor;
 
         #endregion
 
         #region Конструктор
-        public MainWindowViewModel(IRepository<Server> serverRepository,
-                                   IRepository<Sender> senderRepository,
-                                   IRepository<Recipient> recipientRepository,
-                                   IRepository<Message> messageRepository,
-                                   IRepository<MailingList> mailingListRepository,
+        public MainWindowViewModel(IRepositoryAsync<Server> serverRepository,
+                                   IRepositoryAsync<Sender> senderRepository,
+                                   IRepositoryAsync<Recipient> recipientRepository,
+                                   IRepositoryAsync<Message> messageRepository,
+                                   IRepositoryAsync<MailingList> mailingListRepository,
                                    IEntityEditorService<Server> serverEditorService,
                                    IMailSenderService mailSenderService)
         {
@@ -224,7 +223,7 @@ namespace MailMan.ViewModels
 
         #region Шаблонные команды CRUD
 
-        private void AddCommand<T>(Collection<T> collection, IRepository<T> repo, Func<string, T, bool> dialog, string title, ref T select) where T : Entity, new()
+        private static void AddCommand<T>(Collection<T> collection, IRepository<T> repo, Func<string, T, bool> dialog, string title, ref T select) where T : Entity, new()
         {
             T entity = new();
             if (dialog(title, entity) is false) return;
@@ -233,17 +232,17 @@ namespace MailMan.ViewModels
             select = entity;
         }
 
-        private void EditCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, Func<string, T, bool> dialog, string title, ref T selected) where T : Entity
+        private static void EditCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, Func<string, T, bool> dialog, string title, ref T selected) where T : Entity
         {
             if (obj is not T entity) return;
             int listIdx = collection.IndexOf(entity);
-            if (listIdx == -1 || dialog(title, entity) is false || repo.Update(entity, s => s.Id == entity.Id) is false) return;
+            if (listIdx == -1 || dialog(title, entity) is false || repo.Update(entity) is false) return;
             collection.RemoveAt(listIdx);
             collection.Insert(listIdx, entity);
             selected = entity;
         }
 
-        private void AddCommand<T>(Collection<T> collection, IRepository<T> repo, Func< T, bool> dialog, string title, ref T select) where T : Entity, new()
+        private static void AddCommand<T>(Collection<T> collection, IRepository<T> repo, Func< T, bool> dialog, string title, ref T select) where T : Entity, new()
         {
             T entity = new();
             if (dialog(entity) is false) return;
@@ -252,17 +251,17 @@ namespace MailMan.ViewModels
             select = entity;
         }
 
-        private void EditCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, Func<T, bool> dialog, string title, ref T selected) where T : Entity
+        private static void EditCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, Func<T, bool> dialog, string title, ref T selected) where T : Entity
         {
             if (obj is not T entity) return;
             int listIdx = collection.IndexOf(entity);
-            if (listIdx == -1 || dialog(entity) is false || repo.Update(entity, s => s.Id == entity.Id) is false) return;
+            if (listIdx == -1 || dialog(entity) is false || repo.Update(entity) is false) return;
             collection.RemoveAt(listIdx);
             collection.Insert(listIdx, entity);
             selected = entity;
         }
 
-        private void RemoveCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, ref T selected) where T : Entity
+        private static void RemoveCommand<T>(object obj, Collection<T> collection, IRepository<T> repo, ref T selected) where T : Entity
         {
             if (obj is not T entity) return;
             int listIdx = collection.IndexOf(entity);

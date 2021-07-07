@@ -8,8 +8,7 @@ namespace MailMan.Services.Repositories.Base
     public interface IRepository<T> where T : Entity
     {   
         public T Add(T entity);
-        public bool Update(T entity, int id);
-        public bool Update(T entity, Predicate<T> match);
+        public bool Update(T entity);
         public bool Remove(T entity);
         public T GetById(int id);
         public IEnumerable<T> GetSelected(Predicate<T> match);

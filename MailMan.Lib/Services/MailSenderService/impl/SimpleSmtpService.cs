@@ -9,7 +9,7 @@ namespace MailMan.Services.MailSenderService
     public class SimpleSmtpService : IMailSenderService
     {
         #region singleton implementation
-        private static object _lock = new();
+        private static readonly object _lock = new();
         private static volatile IMailSenderService _instance;
         public static IMailSenderService GetService()
         {

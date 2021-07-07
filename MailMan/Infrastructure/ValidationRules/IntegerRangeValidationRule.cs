@@ -15,6 +15,6 @@ namespace MailMan.Infrastructure.ValidationRules
             if (value < LowerBound || value > UpperBound) return ResultFail($"Введите целое число в диапазоне {LowerBound} - {UpperBound}");
             return ValidationResult.ValidResult;
         }
-        private ValidationResult ResultFail(string msg) => new ValidationResult(false, msg);
+        private static ValidationResult ResultFail(string msg) => new(false, msg);
     }
 }

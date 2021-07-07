@@ -7,10 +7,13 @@ using MailMan.Services;
 using MailMan.Services.EMailAddressValidator;
 using MailMan.Services.EntityEditorService;
 using MailMan.Services.MailSenderService;
+using MailMan.Services.Repositories;
 using MailMan.Services.Repositories.Base;
+using MailMan.Services.Repositories.Db;
 using MailMan.ViewModels;
 using MailMan.ViewModels.UserDialog;
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,21 +37,22 @@ namespace MailMan
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
             services
-                .AddSingleton<IRepository<Server>, DebugServerRepository>()
-                .AddSingleton<IRepository<Sender>, DebugSenderRepository>()
-                .AddSingleton<IRepository<Recipient>, DebugRecipientRepository>()
-                .AddSingleton<IRepository<Message>, DebugMessageRepository>()
-                .AddSingleton<IRepository<MailingList>, DebugMailingListRepository>()
-                .AddSingleton<IMailSenderService, DebugMailService>()
-                .AddSingleton<IEmailAddressValidator, EmailAddressValidator>()
-                .AddSingleton<IEntityEditorService<Server>, ServerEditorService>()
-                .AddTransient<MainWindowViewModel>()
-                .AddTransient<NotifyUserDialogViewModel>()
-                .AddTransient<EditServerDialogVM>();
+                .AddDbContext<MailManDB>(opt => opt.UseSqlServer(host.Configuration.GetConnectionString("dbConnection")))
+                .AddScoped<IRepositoryAsync<Server>, ServerRepository>()
+                .AddScoped<IRepositoryAsync<Sender>, SenderRepository>()
+                .AddScoped<IRepositoryAsync<Recipient>, RecipientRepository>()
+                .AddScoped<IRepositoryAsync<Message>, MessageRepository>()
+                .AddScoped<IRepositoryAsync<MailingList>, MailingListRepository>()
+                .AddScoped<IMailSenderService, DebugMailService>()
+                .AddScoped<IEmailAddressValidator, EmailAddressValidator>()
+                .AddScoped<IEntityEditorService<Server>, ServerEditorService>()
+                .AddScoped<MainWindowViewModel>()
+                .AddScoped<NotifyUserDialogViewModel>()
+                .AddScoped<EditServerDialogVM>();
         }
 
         protected override void OnStartup(StartupEventArgs e)
-        {
+        {   
             AppHost.Start();
             base.OnStartup(e);
         }

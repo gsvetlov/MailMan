@@ -17,8 +17,11 @@ namespace MailMan.Data
             collection = CheckValidity(set) ? set : throw new ArgumentOutOfRangeException(nameof(set), "Collection contains invalid or duplicate entities");
         }
 
-        // проверка, что значения Id уникальны и Id > 0
-        private static bool CheckValidity(List<T> set) => (set.Distinct().Count() == set.Count) && (set.FindAll(e => e.Id < 1).Count == 0);
+        private static bool CheckValidity(List<T> set) => ListIdsUnique(set) && ListIdsGreaterThanZero(set);
+
+        private static bool ListIdsUnique(List<T> set) => set.Distinct().Count() == set.Count;
+
+        private static bool ListIdsGreaterThanZero(List<T> set) => set.FindAll(e => e.Id < 1).Count == 0;
 
         public DebugRepository() => collection = new();
                 
@@ -30,17 +33,16 @@ namespace MailMan.Data
             collection.Add(entity);
             return entity;
         }
-        public virtual bool Update(T entity, Predicate<T> match)
+        public virtual bool Update(T entity)
         {
-            var idx = collection.FindIndex(match);
+            var idx = collection.FindIndex(e => e.Id == entity.Id);
             if (idx == -1) return false;
             collection[idx] = entity;
             return true;
         }
         public virtual bool Remove(T entity) => collection.Remove(entity);
         public virtual IEnumerable<T> GetAll() => collection;
-        public virtual IEnumerable<T> GetSelected(Predicate<T> match) => collection.FindAll(match);
-        public bool Update(T entity, int id) => Update(entity, e => e.Id == id);
+        public virtual IEnumerable<T> GetSelected(Predicate<T> match) => collection.FindAll(match);        
         public T GetById(int id) => collection.Find(e => e.Id == id);
     }
 }

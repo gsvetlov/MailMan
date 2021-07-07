@@ -27,7 +27,7 @@ namespace MailMan.Lib.Tests
             Assert.True(actual);
         }
 
-        private static string[] validNames = {
+        private static readonly string[] validNames = {
             "simple@example.com",
             "very.common@example.com",
             "disposable.style.email.with+symbol@example.com",
@@ -52,7 +52,7 @@ namespace MailMan.Lib.Tests
             "संपर्क@डाटामेल.भारत" // Devanagari characters
         };
 
-        private static string[] invalidNames =
+        private static readonly string[] invalidNames =
         {
             null, // null string
             string.Empty, // empty string
