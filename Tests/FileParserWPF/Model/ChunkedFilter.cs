@@ -6,7 +6,7 @@ namespace FileParserWPF.Model
 {
     internal class ChunkedFilter
     {
-        private Action<DataChunk> processor;
+        private readonly Action<DataChunk> processor;
 
         public ChunkedFilter(Action<DataChunk> processor)
         {
@@ -15,9 +15,9 @@ namespace FileParserWPF.Model
         public void Filter(string str)
         {
             var parts = str.Split(" ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            var chunk = ChunkDecode(parts);
-            if (chunk.valid)
-                processor.Invoke(new DataChunk(chunk.type, chunk.first, chunk.second));
+            var (valid, type, first, second) = ChunkDecode(parts);
+            if (valid)
+                processor.Invoke(new DataChunk(type, first, second));
         }
 
         private (bool valid, OperationType type, double first, double second) ChunkDecode(string[] parts)

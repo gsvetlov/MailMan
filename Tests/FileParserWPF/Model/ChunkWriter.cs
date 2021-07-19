@@ -10,8 +10,8 @@ namespace FileParserWPF.Model
     {
         public static readonly string DEFAULT_FILENAME = "result.dat";
         private BlockingCollection<double> inbound = new();
-        private string filename;
         private CancellationTokenSource cts = new();
+        private string filename;
         public string Filename { get => filename; set => filename = value; }
         public ChunkWriter(string filename = null)
         {
@@ -25,7 +25,7 @@ namespace FileParserWPF.Model
         {
             inbound.Add(value);
         }
-        private Task ConsumeInbound()
+        private void ConsumeInbound()
         {
             using FileStream fs = new(filename, FileMode.Create, FileAccess.Write);
             using BinaryWriter writer = new(fs);
@@ -43,7 +43,6 @@ namespace FileParserWPF.Model
                     fs.Flush();
                 }
             }
-            return Task.CompletedTask;
         }
     }
 }

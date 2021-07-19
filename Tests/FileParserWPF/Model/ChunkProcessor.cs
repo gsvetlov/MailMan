@@ -6,7 +6,7 @@ namespace FileParserWPF.Model
 {
     internal class ChunkProcessor
     {
-        private Action<double> writer;
+        private readonly Action<double> writer;
         public ChunkProcessor(Action<double> writer)
         {
             this.writer = writer;

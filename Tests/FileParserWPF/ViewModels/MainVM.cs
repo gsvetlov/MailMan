@@ -96,18 +96,22 @@ namespace FileParserWPF.ViewModels
             {
                 writer.Filename = OutputDirectory;
                 await Task.Run(() => reader.ReadAsync(InputDirectory, processDataCommandCts.Token));
-                await Task.Run(() => writer.Close());
+                writer.Close();
             }
             catch (AggregateException e)
             {
-                MessageText = messageSb.Clear().Append(MessageText).Append(Environment.NewLine).Append(e.InnerException.Message).ToString();
+                MessageText = messageSb.Clear()
+                    .Append(MessageText).Append(Environment.NewLine)
+                    .Append(e.InnerException.Message).ToString();
             }
             sw.Stop();
 
             processDataCommandCts.Dispose();
             ProcessDataExecuting = false;
 
-            MessageText = messageSb.Clear().Append(MessageText).Append(Environment.NewLine).Append($"Данные обработаны за {sw.Elapsed}").ToString();
+            MessageText = messageSb.Clear()
+                .Append(MessageText).Append(Environment.NewLine)
+                .Append($"Данные обработаны за {sw.Elapsed}").ToString();
         }
     }
 }
